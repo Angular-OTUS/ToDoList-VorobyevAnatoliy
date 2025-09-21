@@ -1,0 +1,17 @@
+<h1 class="taskListTitle">Tasks list:</h1>
+<ul class="taskListContainer">
+  @for (task of tasks; track task.id) {
+    <li class="taskContainer">
+      <span class="taskTitle">{{task.name}}</span>
+      <button class="deleteTaskBtn" type="submit">Delete</button>
+    </li>
+  } @empty {
+    <li class="noTasksContainer">
+      <span class="noTasksTitle">There is no tasks!</span>
+    </li>
+  }
+</ul>
+<div class="addTaskContainer">
+  <input class="addTaskInput" type="text" name="newTaskName" id="newTaskName">
+  <button class="addTaskBtn" type="submit">Add</button>
+</div>
