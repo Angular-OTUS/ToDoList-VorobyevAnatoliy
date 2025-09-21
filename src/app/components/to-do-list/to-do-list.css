@@ -1,0 +1,79 @@
+.taskListTitle {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+  border-bottom: 2px solid;
+  padding-bottom: 8px;
+  letter-spacing: 0.02em;
+}
+
+.taskListContainer {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 600px;
+}
+
+.taskContainer {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.taskTitle {
+  flex: 1;
+  padding: 0 10px;
+  color: #333;
+}
+
+.deleteTaskBtn {
+  background-color: transparent;
+  border: none;
+  color: #c00;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px 10px;
+  transition: color 0.3s ease;
+}
+
+.deleteTaskBtn:hover {
+  color: #900;
+}
+
+.addTaskContainer {
+  display: flex;
+  margin-top: 15px;
+  max-width: 600px;
+}
+
+.addTaskInput {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.addTaskInput:focus {
+  border-color: #777;
+}
+
+.addTaskBtn {
+  background-color: transparent;
+  border: 1px solid #293;
+  color: #293;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.addTaskBtn:hover {
+  background-color: #293;
+  color: white;
+}
