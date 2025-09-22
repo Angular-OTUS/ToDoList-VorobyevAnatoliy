@@ -13,5 +13,5 @@
 </ul>
 <div class="container--add">
   <input class="input--add" type="text" [(ngModel)]="newTaskText" placeholder="Task text" id="new-task-text">
-  <button class="button button--add" [disabled]="newTaskTextIsEmpty()">Add</button>
+  <button class="button button--add" [disabled]="newTaskTextIsEmpty()" (click)="addNewTask(newTaskText())">Add</button>
 </div>

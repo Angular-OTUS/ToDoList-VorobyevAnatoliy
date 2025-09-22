@@ -1,7 +1,7 @@
 import {Component, computed, OnInit, signal} from '@angular/core';
 import {Task} from '../../interfaces/task';
 import {FormsModule} from '@angular/forms';
-import {getTasks} from '../../services/storage';
+import {getNextTaskId, getTasks} from '../../services/storage';
 
 @Component({
   selector: 'app-to-do-list',
@@ -26,5 +26,11 @@ export class ToDoList implements OnInit {
 
   deleteTask(id: number) {
     this.tasks = this.tasks.filter(task => task.id !== id)
+  }
+
+  addNewTask(taskText: string) {
+    const nextId = getNextTaskId();
+    this.tasks.push({id: nextId, text: taskText})
+    this.newTaskText.set('')
   }
 }
