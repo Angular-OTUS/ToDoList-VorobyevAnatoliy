@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, computed, OnInit, signal} from '@angular/core';
 import {getTasks, Task} from '../../interfaces/task';
 import {FormsModule} from '@angular/forms';
 
@@ -15,7 +15,9 @@ export class ToDoList implements OnInit {
 
   tasks: Task[] = []
 
-  newTaskText: string = ""
+  newTaskText = signal('')
+
+  newTaskTextIsEmpty = computed(() => !this.newTaskText().trim())
 
   ngOnInit(): void {
     this.tasks = getTasks()
