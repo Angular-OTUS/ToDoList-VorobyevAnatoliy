@@ -23,30 +23,6 @@
   border-bottom: 1px solid #ddd;
 }
 
-.title--task {
-  flex: 1;
-  padding: 0 10px;
-  color: #333;
-}
-
-.button {
-  border: none;
-  color: white;
-  font-weight: bold;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.button-delete {
-  background-color: #e00;
-}
-
-.button-delete:hover {
-  background-color: #900;
-}
-
 .container--add {
   display: flex;
   margin-top: 15px;
@@ -64,6 +40,16 @@
 
 .input--add:focus {
   border-color: #777;
+}
+
+.button {
+  border: none;
+  color: white;
+  font-weight: bold;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .button--add {
