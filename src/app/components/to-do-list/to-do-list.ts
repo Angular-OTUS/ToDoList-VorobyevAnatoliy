@@ -1,6 +1,7 @@
 import {Component, computed, OnInit, signal} from '@angular/core';
-import {getTasks, Task} from '../../interfaces/task';
+import {Task} from '../../interfaces/task';
 import {FormsModule} from '@angular/forms';
+import {getTasks} from '../../services/storage';
 
 @Component({
   selector: 'app-to-do-list',
