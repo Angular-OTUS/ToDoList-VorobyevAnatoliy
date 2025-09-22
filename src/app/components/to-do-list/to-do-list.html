@@ -12,6 +12,6 @@
   }
 </ul>
 <div class="container--add">
-  <input class="input--add" type="text" name="newTaskName" id="newTaskName">
-  <button class="button button--add" type="submit">Add</button>
+  <input class="input--add" type="text" [(ngModel)]="newTaskText" placeholder="Task text" id="new-task-text">
+  <button class="button button--add" [disabled]="!newTaskText.trim()">Add</button>
 </div>

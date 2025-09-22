@@ -73,3 +73,8 @@
 .button--add:hover {
   background-color: #253;
 }
+
+.button--add:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
