@@ -14,9 +14,9 @@ export class ToDoListItem {
   task!: Task;
 
   @Output()
-  deletedTask: EventEmitter<number> = new EventEmitter();
+  deleteTaskEmitter = new EventEmitter<number>();
 
   deleteTask() {
-    this.deletedTask.emit(this.task.id)
+    this.deleteTaskEmitter.emit(this.task.id)
   }
 }

@@ -18,21 +18,21 @@ export class ToDoList implements OnInit {
 
   tasks: Task[] = []
 
-  newTaskText = signal('')
+  newTaskTextInput = signal('')
 
-  newTaskTextIsEmpty = computed(() => !this.newTaskText().trim())
+  newTaskTextIsEmpty = computed(() => !this.newTaskTextInput().trim())
 
   ngOnInit(): void {
     this.tasks = getTasks()
   }
 
-  deleteTask(id: number) {
-    this.tasks = this.tasks.filter(task => task.id !== id)
+  deleteTask(taskId: number) {
+    this.tasks = this.tasks.filter(task => task.id !== taskId)
   }
 
   addNewTask(taskText: string) {
     const nextId = getNextTaskId();
     this.tasks.push({id: nextId, text: taskText})
-    this.newTaskText.set('')
+    this.newTaskTextInput.set('')
   }
 }

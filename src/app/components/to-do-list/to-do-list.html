@@ -2,7 +2,7 @@
 <ul class="container--task-list">
   @for (task of tasks; track task.id) {
     <li>
-      <app-to-do-list-item class="container--task" [task]="task" (deletedTask)="deleteTask(task.id)"></app-to-do-list-item>
+      <app-to-do-list-item class="container--task" [task]="task" (deleteTaskEmitter)="deleteTask($event)"></app-to-do-list-item>
     </li>
   } @empty {
     <li class="container--no-tasks">
@@ -11,6 +11,6 @@
   }
 </ul>
 <div class="container--add">
-  <input class="input--add" type="text" [(ngModel)]="newTaskText" placeholder="Task text" id="new-task-text">
-  <button class="button button--add" [disabled]="newTaskTextIsEmpty()" (click)="addNewTask(newTaskText())">Add</button>
+  <input class="input--add" type="text" [(ngModel)]="newTaskTextInput" placeholder="Task text" id="new-task-text">
+  <button class="button button--add" [disabled]="newTaskTextIsEmpty()" (click)="addNewTask(newTaskTextInput())">Add</button>
 </div>
