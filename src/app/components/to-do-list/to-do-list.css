@@ -1,4 +1,4 @@
-.taskListTitle {
+.title--task-list {
   font-size: 28px;
   font-weight: bold;
   color: #333;
@@ -8,7 +8,7 @@
   letter-spacing: 0.02em;
 }
 
-.taskListContainer {
+.container--task-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -16,40 +16,44 @@
   max-width: 600px;
 }
 
-.taskContainer {
+.container--task {
   display: flex;
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
 
-.taskTitle {
+.title--task {
   flex: 1;
   padding: 0 10px;
   color: #333;
 }
 
-.deleteTaskBtn {
-  background-color: transparent;
+.button {
   border: none;
-  color: #c00;
+  color: white;
   font-weight: bold;
+  padding: 10px 20px;
   cursor: pointer;
-  padding: 5px 10px;
-  transition: color 0.3s ease;
+  border-radius: 4px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.deleteTaskBtn:hover {
-  color: #900;
+.button-delete {
+  background-color: #e00;
 }
 
-.addTaskContainer {
+.button-delete:hover {
+  background-color: #900;
+}
+
+.container--add {
   display: flex;
   margin-top: 15px;
   max-width: 600px;
 }
 
-.addTaskInput {
+.input--add {
   flex: 1;
   padding: 10px;
   border: 1px solid #ddd;
@@ -58,22 +62,14 @@
   transition: border-color 0.3s ease;
 }
 
-.addTaskInput:focus {
+.input--add:focus {
   border-color: #777;
 }
 
-.addTaskBtn {
-  background-color: transparent;
-  border: 1px solid #293;
-  color: #293;
-  font-weight: bold;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease, color 0.3s ease;
+.button--add {
+  background-color: #2a3;
 }
 
-.addTaskBtn:hover {
-  background-color: #293;
-  color: white;
+.button--add:hover {
+  background-color: #253;
 }
