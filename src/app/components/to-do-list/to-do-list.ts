@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {getTasks, Task} from '../../models/task';
+import {getTasks, Task} from '../../interfaces/task';
 
 @Component({
   selector: 'app-to-do-list',
