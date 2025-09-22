@@ -22,4 +22,8 @@ export class ToDoList implements OnInit {
   ngOnInit(): void {
     this.tasks = getTasks()
   }
+
+  deleteTask(id: number) {
+    this.tasks = this.tasks.filter(task => task.id !== id)
+  }
 }
