@@ -29,6 +29,10 @@
   max-width: 600px;
 }
 
+.input--form-field {
+  width: 510px;
+}
+
 .input--add {
   flex: 1;
   padding: 10px;
@@ -54,6 +58,8 @@
 
 .button--add {
   background-color: #2a3;
+  height: 75px;
+  width: 80px;
 }
 
 .button--add:hover {

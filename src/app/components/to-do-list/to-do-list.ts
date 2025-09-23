@@ -3,6 +3,8 @@ import {Task} from '../../interfaces/task';
 import {FormsModule} from '@angular/forms';
 import {getNextTaskId, getTasks} from '../../services/storage';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
+import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
+import {MatIconButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-to-do-list',
@@ -10,7 +12,11 @@ import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
   standalone: true,
   imports: [
     FormsModule,
-    ToDoListItem
+    ToDoListItem,
+    MatInput,
+    MatFormField,
+    MatLabel,
+    MatIconButton
   ],
   styleUrl: './to-do-list.css'
 })
