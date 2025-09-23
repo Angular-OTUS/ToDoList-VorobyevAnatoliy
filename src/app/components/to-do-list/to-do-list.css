@@ -1,4 +1,4 @@
-.title--task-list {
+.title {
   font-size: 28px;
   font-weight: bold;
   color: #333;
@@ -8,7 +8,7 @@
   letter-spacing: 0.02em;
 }
 
-.container--task-list {
+.task-list {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -16,24 +16,17 @@
   max-width: 600px;
 }
 
-.container--task {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  border-bottom: 1px solid #ddd;
-}
-
-.container--add {
+.add-task {
   display: flex;
   margin-top: 15px;
   max-width: 600px;
 }
 
-.input--form-field {
+.add-task--form-field {
   width: 510px;
 }
 
-.input--add {
+.add-task--input {
   flex: 1;
   padding: 10px;
   border: 1px solid #ddd;
@@ -42,7 +35,7 @@
   transition: border-color 0.3s ease;
 }
 
-.input--add:focus {
+.add-task--input:focus {
   border-color: #777;
 }
 

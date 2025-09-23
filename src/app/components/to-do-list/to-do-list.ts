@@ -37,8 +37,7 @@ export class ToDoList implements OnInit {
   }
 
   addNewTask(taskText: string) {
-    const nextId = getNextTaskId();
-    this.tasks.push({id: nextId, text: taskText})
+    this.tasks.push({id: getNextTaskId(), text: taskText})
     this.newTaskTextInput.set('')
   }
 }
