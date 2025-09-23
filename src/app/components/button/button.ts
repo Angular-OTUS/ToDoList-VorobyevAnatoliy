@@ -13,10 +13,10 @@ import {NgClass} from '@angular/common';
 export class Button {
 
   @Input()
-  title: string = '';
+  title = '';
 
   @Input()
-  disabled: boolean = false;
+  disabled = false;
 
   @Input()
   action: 'add' | 'delete' | 'none' = 'none'
