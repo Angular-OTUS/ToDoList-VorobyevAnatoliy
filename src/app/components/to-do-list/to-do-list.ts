@@ -5,7 +5,6 @@ import {getNextTaskId, getTasks} from '../../services/storage';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatIconButton} from '@angular/material/button';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-to-do-list',
@@ -18,7 +17,6 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
     MatFormField,
     MatLabel,
     MatIconButton,
-    MatProgressSpinner
   ],
   styleUrl: './to-do-list.css'
 })
@@ -30,13 +28,8 @@ export class ToDoList implements OnInit {
 
   newTaskTextIsEmpty = computed(() => !this.newTaskTextInput().trim())
 
-  isLoading = signal(false)
-
   ngOnInit(): void {
-    setTimeout(() => {
-      this.tasks = getTasks()
-      this.isLoading.set(true)
-    }, 500)
+    this.tasks = getTasks()
   }
 
   deleteTask(taskId: number) {
