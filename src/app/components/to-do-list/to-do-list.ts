@@ -1,4 +1,4 @@
-import {Component, computed, OnInit, signal} from '@angular/core';
+import {Component, computed, OnInit, Signal, signal, WritableSignal} from '@angular/core';
 import {Task} from '../../interfaces/task';
 import {FormsModule} from '@angular/forms';
 import {getNextTaskId, getTasks} from '../../services/storage';
@@ -28,11 +28,11 @@ export class ToDoList implements OnInit {
 
   tasks: Task[] = []
 
-  newTaskTextInput = signal('')
+  newTaskTextInput: WritableSignal<string> = signal('')
 
-  newTaskTextIsEmpty = computed(() => !this.newTaskTextInput().trim())
+  newTaskTextIsEmpty: Signal<boolean> = computed(() => !this.newTaskTextInput().trim())
 
-  isLoading = signal(false)
+  isLoading: WritableSignal<boolean> = signal(false)
 
   ngOnInit(): void {
     this.isLoading.set(true)
