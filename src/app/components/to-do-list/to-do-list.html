@@ -1,17 +1,20 @@
-<h1 class="taskListTitle">Tasks list:</h1>
-<ul class="taskListContainer">
+<h1 class="title">Tasks list:</h1>
+<ul class="task-list">
   @for (task of tasks; track task.id) {
-    <li class="taskContainer">
-      <span class="taskTitle">{{task.name}}</span>
-      <button class="deleteTaskBtn" type="submit">Delete</button>
-    </li>
+    <app-to-do-list-item [task]="task"
+                         (deleteTaskEmitter)="deleteTask($event)"/>
   } @empty {
-    <li class="noTasksContainer">
-      <span class="noTasksTitle">There is no tasks!</span>
+    <li class="empty-task">
+      <span class="empty-task--title">There is no tasks!</span>
     </li>
   }
 </ul>
-<div class="addTaskContainer">
-  <input class="addTaskInput" type="text" name="newTaskName" id="newTaskName">
-  <button class="addTaskBtn" type="submit">Add</button>
+<div class="add-task">
+  <mat-form-field class="add-task--form-field">
+    <mat-label>Enter a task name</mat-label>
+    <input matInput class="add-task--input" type="text" [(ngModel)]="newTaskTextInput" id="new-task-text">
+  </mat-form-field>
+  <button class="button button--add" [disabled]="newTaskTextIsEmpty()" (click)="addNewTask(newTaskTextInput())">
+    Add
+  </button>
 </div>
