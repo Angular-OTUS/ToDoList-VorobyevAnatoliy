@@ -22,7 +22,7 @@ import {Button} from '../button/button';
     MatProgressSpinner,
     Button,
   ],
-  styleUrl: './to-do-list.css'
+  styleUrl: './to-do-list.css',
 })
 export class ToDoList implements OnInit {
 

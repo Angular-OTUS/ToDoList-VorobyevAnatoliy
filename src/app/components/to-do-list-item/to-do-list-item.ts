@@ -5,11 +5,11 @@ import {Button} from '../button/button';
 @Component({
   selector: 'app-to-do-list-item',
   imports: [
-    Button
+    Button,
   ],
   templateUrl: './to-do-list-item.html',
   standalone: true,
-  styleUrl: './to-do-list-item.css'
+  styleUrl: './to-do-list-item.css',
 })
 export class ToDoListItem {
 

@@ -6,7 +6,7 @@ import {ToDoList} from './components/to-do-list/to-do-list';
   templateUrl: './app.html',
   standalone: true,
   styleUrl: './app.css',
-  imports: [ToDoList]
+  imports: [ToDoList],
 })
 export class App {
 }

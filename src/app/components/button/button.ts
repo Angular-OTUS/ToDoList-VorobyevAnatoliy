@@ -4,11 +4,11 @@ import {NgClass} from '@angular/common';
 @Component({
   selector: 'app-button',
   imports: [
-    NgClass
+    NgClass,
   ],
   templateUrl: './button.html',
   standalone: true,
-  styleUrl: './button.css'
+  styleUrl: './button.css',
 })
 export class Button {
 
