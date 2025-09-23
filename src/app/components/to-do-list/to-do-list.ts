@@ -6,6 +6,7 @@ import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatIconButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {Button} from '../button/button';
 
 @Component({
   selector: 'app-to-do-list',
@@ -18,7 +19,8 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
     MatFormField,
     MatLabel,
     MatIconButton,
-    MatProgressSpinner
+    MatProgressSpinner,
+    Button,
   ],
   styleUrl: './to-do-list.css'
 })

@@ -1,4 +1,4 @@
 <li class="task">
   <span class="task--title">{{task.text}}</span>
-  <button class="button button--delete" (click)="deleteTask()">Delete</button>
+  <app-button [title]="'Delete'" [action]="'delete'" (click)="deleteTask()"/>
 </li>
