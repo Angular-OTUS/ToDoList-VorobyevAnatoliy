@@ -11,5 +11,8 @@ export function getTasks(): Task[] {
 }
 
 export function getNextTaskId(): number {
-  return tasks.length + 1;
+  if (tasks.length === 0) {
+    return 1;
+  }
+  return Math.max(...tasks.map(t => t.id)) + 1;
 }
