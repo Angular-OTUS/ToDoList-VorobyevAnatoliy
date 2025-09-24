@@ -13,9 +13,9 @@ import {Button} from '../button/button';
 })
 export class ToDoListItem {
 
-  task = input.required<Task>();
+  readonly task = input.required<Task>();
 
-  deletedTaskId = model(0);
+  readonly deletedTaskId = model(0);
 
   deleteTask() {
     this.deletedTaskId.set(this.task().id)

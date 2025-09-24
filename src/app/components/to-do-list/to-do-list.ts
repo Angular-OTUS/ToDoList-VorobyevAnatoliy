@@ -26,17 +26,17 @@ import {Button} from '../button/button';
 })
 export class ToDoList implements OnInit, OnDestroy {
 
-  tasks = signal<Task[]>([])
+  readonly tasks = signal<Task[]>([])
 
-  newTaskTextInput = signal('')
+  readonly newTaskTextInput = signal('')
 
-  newTaskTextIsEmpty = computed(() => !this.newTaskTextInput().trim())
+  readonly newTaskTextIsEmpty = computed(() => !this.newTaskTextInput().trim())
 
-  isLoading = signal(false)
+  readonly isLoading = signal(false)
 
-  deletedTaskId = signal(0)
+  readonly deletedTaskId = signal(0)
 
-  deleteTaskEffect = effect(() => this.deleteTask(this.deletedTaskId()))
+  readonly deleteTaskEffect = effect(() => this.deleteTask(this.deletedTaskId()))
 
   ngOnInit(): void {
     this.isLoading.set(true)

@@ -12,15 +12,15 @@ import {NgClass} from '@angular/common';
 })
 export class Button {
 
-  title = input('');
+  readonly title = input('');
 
-  disabled = input( false);
+  readonly disabled = input( false);
 
-  action = input<ActionType>('none')
+  readonly action = input<ActionType>('none')
 
-  isAdd = computed(() => this.action() === 'add')
+  readonly isAdd = computed(() => this.action() === 'add')
 
-  isDelete = computed(() => this.action() === 'delete')
+  readonly isDelete = computed(() => this.action() === 'delete')
 }
 
 type ActionType = 'add' | 'delete' | 'none';
