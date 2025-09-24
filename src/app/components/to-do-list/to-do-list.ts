@@ -1,4 +1,4 @@
-import {Component, computed, OnInit, Signal, signal, WritableSignal} from '@angular/core';
+import {Component, computed, effect, OnDestroy, OnInit, signal} from '@angular/core';
 import {Task} from '../../interfaces/task';
 import {FormsModule} from '@angular/forms';
 import {getNextTaskId, getTasks} from '../../services/storage';
@@ -24,30 +24,38 @@ import {Button} from '../button/button';
   ],
   styleUrl: './to-do-list.css',
 })
-export class ToDoList implements OnInit {
+export class ToDoList implements OnInit, OnDestroy {
 
-  tasks: Task[] = []
+  tasks = signal<Task[]>([])
 
-  newTaskTextInput: WritableSignal<string> = signal('')
+  newTaskTextInput = signal('')
 
-  newTaskTextIsEmpty: Signal<boolean> = computed(() => !this.newTaskTextInput().trim())
+  newTaskTextIsEmpty = computed(() => !this.newTaskTextInput().trim())
 
-  isLoading: WritableSignal<boolean> = signal(false)
+  isLoading = signal(false)
+
+  deletedTaskId = signal(0)
+
+  deleteTaskEffect = effect(() => this.deleteTask(this.deletedTaskId()))
 
   ngOnInit(): void {
     this.isLoading.set(true)
     setTimeout(() => {
-      this.tasks = getTasks()
+      this.tasks.set(getTasks())
       this.isLoading.set(false)
     }, 500)
   }
 
+  ngOnDestroy(): void {
+    this.deleteTaskEffect.destroy()
+  }
+
   deleteTask(taskId: number) {
-    this.tasks = this.tasks.filter(task => task.id !== taskId)
+    this.tasks.update((taskList) => taskList.filter(task => task.id !== taskId))
   }
 
   addNewTask(taskText: string) {
-    this.tasks.push({id: getNextTaskId(), text: taskText})
+    this.tasks.update((taskList) => [...taskList, {id: getNextTaskId(), text: taskText}])
     this.newTaskTextInput.set('')
   }
 }

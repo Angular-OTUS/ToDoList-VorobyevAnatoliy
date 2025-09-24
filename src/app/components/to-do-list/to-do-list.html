@@ -3,10 +3,10 @@
   @if (isLoading()) {
     <mat-spinner/>
   } @else {
-    @for (task of tasks; track task.id) {
+    @for (task of tasks(); track task.id) {
       <app-to-do-list-item
         [task]="task"
-        (deleteTaskEmitter)="deleteTask($event)"
+        [(deletedTaskId)]="deletedTaskId"
       />
     } @empty {
       <li class="empty-task">
