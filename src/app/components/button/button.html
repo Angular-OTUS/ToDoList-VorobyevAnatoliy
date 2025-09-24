@@ -1,6 +1,6 @@
 <button
   [ngClass]="{'button': true, 'button--add': isAdd(), 'button--delete': isDelete()}"
-  [disabled]="disabled"
+  [disabled]="disabled()"
 >
-  {{ title }}
+  {{ title() }}
 </button>

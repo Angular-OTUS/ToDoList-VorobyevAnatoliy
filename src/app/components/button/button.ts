@@ -1,4 +1,4 @@
-import {Component, computed, Input, Signal} from '@angular/core';
+import {Component, computed, input, InputSignal, Signal} from '@angular/core';
 import {NgClass} from '@angular/common';
 
 @Component({
@@ -12,16 +12,15 @@ import {NgClass} from '@angular/common';
 })
 export class Button {
 
-  @Input()
-  title = '';
+  title: InputSignal<string> = input('');
 
-  @Input()
-  disabled = false;
+  disabled: InputSignal<boolean> = input( false);
 
-  @Input()
-  action: 'add' | 'delete' | 'none' = 'none'
+  action: InputSignal<ActionType> = input<ActionType>('none')
 
-  isAdd: Signal<boolean> = computed(() => this.action === 'add')
+  isAdd: Signal<boolean> = computed(() => this.action() === 'add')
 
-  isDelete: Signal<boolean> = computed(() => this.action === 'delete')
+  isDelete: Signal<boolean> = computed(() => this.action() === 'delete')
 }
+
+type ActionType = 'add' | 'delete' | 'none';
