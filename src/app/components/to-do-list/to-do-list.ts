@@ -55,7 +55,7 @@ export class ToDoList implements OnInit, OnDestroy {
   }
 
   addNewTask(taskText: string) {
-    this.tasks.update((taskList) => [...taskList, {id: getNextTaskId(), text: taskText}])
+    this.tasks.update((taskList) => [...taskList, {id: getNextTaskId(taskList), text: taskText}])
     this.newTaskTextInput.set('')
   }
 }

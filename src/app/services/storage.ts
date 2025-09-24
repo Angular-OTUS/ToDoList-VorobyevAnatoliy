@@ -10,9 +10,9 @@ export function getTasks(): Task[] {
   return tasks
 }
 
-export function getNextTaskId(): number {
+export function getNextTaskId(taskList: Task[]): number {
   if (tasks.length === 0) {
     return 1;
   }
-  return Math.max(...tasks.map(t => t.id)) + 1;
+  return Math.max(...taskList.map(t => t.id)) + 1;
 }
