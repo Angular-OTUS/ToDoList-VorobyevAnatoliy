@@ -21,7 +21,7 @@ import {getNextId} from '../../helpers/generator-id';
     MatLabel,
     MatIconButton,
     MatProgressSpinner,
-    Button,
+    Button
   ],
   styleUrl: './to-do-list.css',
 })
