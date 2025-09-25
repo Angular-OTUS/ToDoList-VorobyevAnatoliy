@@ -1,5 +1,6 @@
 import {Component, computed, input} from '@angular/core';
 import {NgClass} from '@angular/common';
+import {ActionType} from './action-types';
 
 @Component({
   selector: 'app-button',
@@ -22,5 +23,3 @@ export class Button {
 
   readonly isDelete = computed(() => this.action() === 'delete')
 }
-
-type ActionType = 'add' | 'delete' | 'none';

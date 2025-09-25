@@ -1,4 +1,4 @@
-import {Task} from '../interfaces/task';
+import {Task} from '../models/task';
 
 const tasks: Task[] = [
   {id: 1, text: "Visit a market"},
@@ -8,11 +8,4 @@ const tasks: Task[] = [
 
 export function getTasks(): Task[] {
   return tasks
-}
-
-export function getNextTaskId(taskList: Task[]): number {
-  if (tasks.length === 0) {
-    return 1;
-  }
-  return Math.max(...taskList.map(t => t.id)) + 1;
 }

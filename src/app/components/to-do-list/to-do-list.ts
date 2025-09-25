@@ -1,12 +1,13 @@
 import {Component, computed, effect, OnDestroy, OnInit, signal} from '@angular/core';
-import {Task} from '../../interfaces/task';
+import {Task} from '../../models/task';
 import {FormsModule} from '@angular/forms';
-import {getNextTaskId, getTasks} from '../../services/storage';
+import {getTasks} from '../../services/storage';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatIconButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {Button} from '../button/button';
+import {getNextId} from '../../helpers/generator-id';
 
 @Component({
   selector: 'app-to-do-list',
@@ -39,6 +40,14 @@ export class ToDoList implements OnInit, OnDestroy {
   readonly deleteTaskEffect = effect(() => this.deleteTask(this.deletedTaskId()))
 
   ngOnInit(): void {
+    this.loadTasks()
+  }
+
+  ngOnDestroy(): void {
+    this.deleteTaskEffect.destroy()
+  }
+
+  loadTasks(): void {
     this.isLoading.set(true)
     setTimeout(() => {
       this.tasks.set(getTasks())
@@ -46,16 +55,12 @@ export class ToDoList implements OnInit, OnDestroy {
     }, 500)
   }
 
-  ngOnDestroy(): void {
-    this.deleteTaskEffect.destroy()
-  }
-
   deleteTask(taskId: number) {
     this.tasks.update((taskList) => taskList.filter(task => task.id !== taskId))
   }
 
   addNewTask(taskText: string) {
-    this.tasks.update((taskList) => [...taskList, {id: getNextTaskId(taskList), text: taskText}])
+    this.tasks.update((taskList) => [...taskList, {id: getNextId(taskList), text: taskText}])
     this.newTaskTextInput.set('')
   }
 }
