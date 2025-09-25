@@ -38,28 +38,3 @@
 .add-task--input:focus {
   border-color: #777;
 }
-
-.button {
-  border: none;
-  color: white;
-  font-weight: bold;
-  padding: 10px 20px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.button--add {
-  background-color: #2a3;
-  height: 75px;
-  width: 80px;
-}
-
-.button--add:hover {
-  background-color: #253;
-}
-
-.button--add:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}

@@ -1,12 +1,18 @@
 <h1 class="title">Tasks list:</h1>
 <ul class="task-list">
-  @for (task of tasks; track task.id) {
-    <app-to-do-list-item [task]="task"
-                         (deleteTaskEmitter)="deleteTask($event)"/>
-  } @empty {
-    <li class="empty-task">
-      <span class="empty-task--title">There is no tasks!</span>
-    </li>
+  @if (isLoading()) {
+    <mat-spinner/>
+  } @else {
+    @for (task of tasks(); track task.id) {
+      <app-to-do-list-item
+        [task]="task"
+        [(deletedTaskId)]="deletedTaskId"
+      />
+    } @empty {
+      <li class="empty-task">
+        <span class="empty-task--title">There is no tasks!</span>
+      </li>
+    }
   }
 </ul>
 <div class="add-task">
@@ -14,7 +20,10 @@
     <mat-label>Enter a task name</mat-label>
     <input matInput class="add-task--input" type="text" [(ngModel)]="newTaskTextInput" id="new-task-text">
   </mat-form-field>
-  <button class="button button--add" [disabled]="newTaskTextIsEmpty()" (click)="addNewTask(newTaskTextInput())">
-    Add
-  </button>
+  <app-button
+    [title]="'Add'"
+    [action]="'add'"
+    [disabled]="newTaskTextIsEmpty()"
+    (click)="addNewTask(newTaskTextInput())"
+  />
 </div>

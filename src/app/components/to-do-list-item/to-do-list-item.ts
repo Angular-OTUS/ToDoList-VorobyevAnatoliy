@@ -1,22 +1,23 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {Task} from '../../interfaces/task';
+import {Component, input, model} from '@angular/core';
+import {Task} from '../../models/task';
+import {Button} from '../button/button';
 
 @Component({
   selector: 'app-to-do-list-item',
-  imports: [],
+  imports: [
+    Button,
+  ],
   templateUrl: './to-do-list-item.html',
   standalone: true,
-  styleUrl: './to-do-list-item.css'
+  styleUrl: './to-do-list-item.css',
 })
 export class ToDoListItem {
 
-  @Input({required: true})
-  task!: Task;
+  readonly task = input.required<Task>();
 
-  @Output()
-  deleteTaskEmitter = new EventEmitter<number>();
+  readonly deletedTaskId = model(0);
 
   deleteTask() {
-    this.deleteTaskEmitter.emit(this.task.id)
+    this.deletedTaskId.set(this.task().id)
   }
 }
