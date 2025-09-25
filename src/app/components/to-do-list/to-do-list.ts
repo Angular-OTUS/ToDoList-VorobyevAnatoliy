@@ -29,9 +29,11 @@ export class ToDoList implements OnInit {
 
   readonly tasks = signal<Task[]>([])
 
-  readonly newTaskTextInput = signal('')
+  readonly newTaskTitle = signal('')
 
-  readonly newTaskTextIsEmpty = computed(() => !this.newTaskTextInput().trim())
+  readonly newTaskTitleIsEmpty = computed(() => !this.newTaskTitle().trim())
+
+  readonly newTaskDescription = signal('')
 
   readonly isLoading = signal(false)
 
@@ -51,8 +53,12 @@ export class ToDoList implements OnInit {
     this.tasks.update((taskList) => taskList.filter(task => task.id !== taskId))
   }
 
-  addNewTask(taskText: string) {
-    this.tasks.update((taskList) => [...taskList, {id: getNextId(taskList), text: taskText}])
-    this.newTaskTextInput.set('')
+  addNewTask(taskTitle: string, taskDescription: string) {
+    this.tasks.update((taskList) => [...taskList, {
+      id: getNextId(taskList),
+      text: taskTitle,
+      description: taskDescription
+    }])
+    this.newTaskTitle.set('')
   }
 }

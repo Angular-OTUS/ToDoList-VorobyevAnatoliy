@@ -1,29 +1,32 @@
 <h1 class="title">Tasks list:</h1>
-<ul class="task-list">
-  @if (isLoading()) {
-    <mat-spinner/>
-  } @else {
-    @for (task of tasks(); track task.id) {
-      <app-to-do-list-item
-        [task]="task"
-        (deletedTaskId)="deleteTask($event)"
-      />
-    } @empty {
-      <li class="empty-task">
-        <span class="empty-task--title">There is no tasks!</span>
-      </li>
+<main class="tasks--container">
+  <ul class="tasks--list">
+    @if (isLoading()) {
+      <mat-spinner/>
+    } @else {
+      @for (task of tasks(); track task.id) {
+        <app-to-do-list-item
+          [task]="task"
+          (deletedTaskId)="deleteTask($event)"
+        />
+      } @empty {
+        <li class="tasks--empty">
+          <span class="empty-task--title">There is no tasks!</span>
+        </li>
+      }
     }
-  }
-</ul>
-<div class="add-task">
-  <mat-form-field class="add-task--form-field">
-    <mat-label>Enter a task name</mat-label>
-    <input matInput class="add-task--input" type="text" [(ngModel)]="newTaskTextInput" id="new-task-text">
-  </mat-form-field>
-  <app-button
-    [title]="'Add'"
-    [action]="'add'"
-    [disabled]="newTaskTextIsEmpty()"
-    (click)="addNewTask(newTaskTextInput())"
-  />
-</div>
+  </ul>
+  <div class="add-task">
+    <mat-form-field class="add-task--form-field">
+      <mat-label>Enter a task name</mat-label>
+      <input matInput class="add-task--input" type="text" [(ngModel)]="newTaskTitle" id="new-task-text">
+    </mat-form-field>
+    <app-button
+      [title]="'Add'"
+      [action]="'add'"
+      [disabled]="newTaskTitleIsEmpty()"
+      (click)="addNewTask(newTaskTitle(), newTaskDescription())"
+    />
+    <textarea class="add-task--description" name="task-description" id="task-description" cols="30" rows="10" placeholder="Enter a task description" [(ngModel)]="newTaskDescription"></textarea>
+  </div>
+</main>
