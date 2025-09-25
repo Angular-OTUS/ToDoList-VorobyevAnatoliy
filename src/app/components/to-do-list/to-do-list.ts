@@ -1,4 +1,4 @@
-import {Component, computed, effect, OnDestroy, OnInit, signal} from '@angular/core';
+import {Component, computed, OnInit, signal} from '@angular/core';
 import {Task} from '../../models/task';
 import {FormsModule} from '@angular/forms';
 import {getTasks} from '../../services/storage';
@@ -21,11 +21,11 @@ import {getNextId} from '../../helpers/generator-id';
     MatLabel,
     MatIconButton,
     MatProgressSpinner,
-    Button
+    Button,
   ],
   styleUrl: './to-do-list.css',
 })
-export class ToDoList implements OnInit, OnDestroy {
+export class ToDoList implements OnInit {
 
   readonly tasks = signal<Task[]>([])
 
@@ -35,16 +35,8 @@ export class ToDoList implements OnInit, OnDestroy {
 
   readonly isLoading = signal(false)
 
-  readonly deletedTaskId = signal(0)
-
-  readonly deleteTaskEffect = effect(() => this.deleteTask(this.deletedTaskId()))
-
   ngOnInit(): void {
     this.loadTasks()
-  }
-
-  ngOnDestroy(): void {
-    this.deleteTaskEffect.destroy()
   }
 
   loadTasks(): void {

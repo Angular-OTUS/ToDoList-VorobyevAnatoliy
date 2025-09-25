@@ -6,7 +6,7 @@
     @for (task of tasks(); track task.id) {
       <app-to-do-list-item
         [task]="task"
-        [(deletedTaskId)]="deletedTaskId"
+        (deletedTaskId)="deleteTask($event)"
       />
     } @empty {
       <li class="empty-task">

@@ -1,4 +1,4 @@
-import {Component, input, model} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {Task} from '../../models/task';
 import {Button} from '../button/button';
 
@@ -15,9 +15,9 @@ export class ToDoListItem {
 
   readonly task = input.required<Task>();
 
-  readonly deletedTaskId = model(0);
+  readonly deletedTaskId = output<number>();
 
   deleteTask() {
-    this.deletedTaskId.set(this.task().id)
+    this.deletedTaskId.emit(this.task().id)
   }
 }
