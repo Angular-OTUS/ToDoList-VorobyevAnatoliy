@@ -1,4 +1,13 @@
 <li class="task">
-  <span class="task--title" (click)="selectTask()">{{ task().text }}</span>
-  <app-button [title]="'Delete'" [action]="'delete'" (click)="deleteTask()"/>
+  <span class="task--title"
+        tabindex="{{task().id}}"
+        (click)="selectTask()"
+        (keyup.enter)="selectTask()">
+    {{ task().text }}
+  </span>
+  <app-button
+    [title]="'Delete'"
+    [action]="'delete'"
+    (click)="deleteTask()"
+  />
 </li>
