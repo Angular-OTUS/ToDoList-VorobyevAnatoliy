@@ -10,9 +10,7 @@
           (deletedTaskId)="deleteTask($event)"
         />
       } @empty {
-        <li class="tasks--empty">
-          <span class="empty-task--title">There is no tasks!</span>
-        </li>
+        <p class="tasks--empty">There is no active tasks!</p>
       }
     }
   </ul>
@@ -29,4 +27,7 @@
     />
     <textarea class="add-task--description" name="task-description" id="task-description" cols="30" rows="10" placeholder="Enter a task description" [(ngModel)]="newTaskDescription"></textarea>
   </div>
+  <aside>
+    <textarea class="tasks-list--description"></textarea>
+  </aside>
 </main>
