@@ -60,5 +60,6 @@ export class ToDoList implements OnInit {
       description: taskDescription
     }])
     this.newTaskTitle.set('')
+    this.newTaskDescription.set('')
   }
 }
