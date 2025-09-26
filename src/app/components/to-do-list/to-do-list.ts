@@ -29,13 +29,17 @@ export class ToDoList implements OnInit {
 
   readonly tasks = signal<Task[]>([])
 
+  readonly isLoading = signal(false)
+
   readonly newTaskTitle = signal('')
 
   readonly newTaskTitleIsEmpty = computed(() => !this.newTaskTitle().trim())
 
   readonly newTaskDescription = signal('')
 
-  readonly isLoading = signal(false)
+  readonly selectedItemId = signal(-1)
+
+  readonly selectedTaskDescription = computed(() => this.getSelectedTaskDescription(this.selectedItemId()))
 
   ngOnInit(): void {
     this.loadTasks()
@@ -49,15 +53,31 @@ export class ToDoList implements OnInit {
     }, 500)
   }
 
-  deleteTask(taskId: number) {
+  selectTask(taskId: number): void {
+    this.selectedItemId.set(taskId)
+  }
+
+  getSelectedTask(taskId: number): Task | undefined {
+    return this.tasks().find(task => task.id === taskId)
+  }
+
+  getSelectedTaskDescription(taskId: number): string {
+    const selectedTask = this.getSelectedTask(taskId);
+    if (!selectedTask) {
+      return ''
+    }
+    return selectedTask.description
+  }
+
+  deleteTask(taskId: number): void {
     this.tasks.update((taskList) => taskList.filter(task => task.id !== taskId))
   }
 
-  addNewTask(taskTitle: string, taskDescription: string) {
+  addNewTask(taskTitle: string, taskDescription: string): void {
     this.tasks.update((taskList) => [...taskList, {
       id: getNextId(taskList),
       text: taskTitle,
-      description: taskDescription
+      description: taskDescription,
     }])
     this.newTaskTitle.set('')
     this.newTaskDescription.set('')

@@ -1,4 +1,4 @@
 <li class="task">
-  <span class="task--title">{{ task().text }}</span>
+  <span class="task--title" (click)="selectTask()">{{ task().text }}</span>
   <app-button [title]="'Delete'" [action]="'delete'" (click)="deleteTask()"/>
 </li>

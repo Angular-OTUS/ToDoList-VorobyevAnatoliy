@@ -7,6 +7,7 @@
       @for (task of tasks(); track task.id) {
         <app-to-do-list-item
           [task]="task"
+          (selectedTaskId)="selectTask($event)"
           (deletedTaskId)="deleteTask($event)"
         />
       } @empty {
@@ -28,6 +29,6 @@
     <textarea class="add-task--description" name="task-description" id="task-description" cols="30" rows="10" placeholder="Enter a task description" [(ngModel)]="newTaskDescription"></textarea>
   </div>
   <aside>
-    <textarea class="tasks-list--description"></textarea>
+    <textarea class="tasks-list--description">{{selectedTaskDescription()}}</textarea>
   </aside>
 </main>
