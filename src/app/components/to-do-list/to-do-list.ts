@@ -27,6 +27,8 @@ import {getNextId} from '../../helpers/generator-id';
 })
 export class ToDoList implements OnInit {
 
+  private defaultTaskId: number = -1;
+
   readonly tasks = signal<Task[]>([])
 
   readonly isLoading = signal(false)
@@ -37,7 +39,7 @@ export class ToDoList implements OnInit {
 
   readonly newTaskDescription = signal('')
 
-  readonly selectedItemId = signal(-1)
+  readonly selectedItemId = signal(this.defaultTaskId)
 
   readonly selectedTaskDescription = computed(() => this.getSelectedTaskDescription(this.selectedItemId()))
 
@@ -81,5 +83,6 @@ export class ToDoList implements OnInit {
     }])
     this.newTaskTitle.set('')
     this.newTaskDescription.set('')
+    this.selectedItemId.set(this.defaultTaskId)
   }
 }
