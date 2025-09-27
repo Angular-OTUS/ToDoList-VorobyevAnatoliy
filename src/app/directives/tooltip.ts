@@ -48,24 +48,8 @@ export class TooltipDirective implements OnDestroy {
   private createToolTip(): void {
     this.tooltipElement = this.renderer.createElement('span')
     this.renderer.appendChild(document.body, this.tooltipElement)
-    // this.renderer.addClass(this.tooltipElement, 'app-tooltip');
+    this.renderer.addClass(this.tooltipElement, 'app-tooltip');
     this.renderer.setProperty(this.tooltipElement, 'textContent', this.tooltipText());
-    this.setStyles(this.tooltipElement, {
-      position: 'fixed',
-      padding: '5px 10px',
-      backgroundColor: 'black',
-      color: 'white',
-      borderRadius: '4px',
-      fontSize: '12px',
-      zIndex: '1000',
-      display: 'none',
-    });
-  }
-
-  private setStyles(element: HTMLElement | undefined, styles: Record<string, string>) {
-    for (const [key, value] of Object.entries(styles)) {
-      this.renderer.setStyle(element, key, value);
-    }
   }
 
   private setPosition() {
