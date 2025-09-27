@@ -27,7 +27,7 @@ import {getNextId} from '../../helpers/generator-id';
 })
 export class ToDoList implements OnInit {
 
-  private defaultTaskId: number = -1;
+  private defaultTaskId = -1;
 
   readonly tasks = signal<Task[]>([])
 
@@ -41,7 +41,7 @@ export class ToDoList implements OnInit {
 
   readonly selectedItemId = signal(this.defaultTaskId)
 
-  readonly selectedTaskDescription = computed(() => this.getSelectedTaskDescription(this.selectedItemId()))
+  readonly selectedTaskDescription = computed(() => this.tasks().find(t => t.id === this.selectedItemId())?.description)
 
   ngOnInit(): void {
     this.loadTasks()
@@ -55,27 +55,15 @@ export class ToDoList implements OnInit {
     }, 500)
   }
 
-  selectTask(taskId: number): void {
+  onSelectTask(taskId: number): void {
     this.selectedItemId.set(taskId)
   }
 
-  getSelectedTask(taskId: number): Task | undefined {
-    return this.tasks().find(task => task.id === taskId)
-  }
-
-  getSelectedTaskDescription(taskId: number): string {
-    const selectedTask = this.getSelectedTask(taskId);
-    if (!selectedTask) {
-      return ''
-    }
-    return selectedTask.description
-  }
-
-  deleteTask(taskId: number): void {
+  onDeleteTask(taskId: number): void {
     this.tasks.update((taskList) => taskList.filter(task => task.id !== taskId))
   }
 
-  addNewTask(taskTitle: string, taskDescription: string): void {
+  onAddTask(taskTitle: string, taskDescription: string): void {
     this.tasks.update((taskList) => [...taskList, {
       id: getNextId(taskList),
       text: taskTitle,
