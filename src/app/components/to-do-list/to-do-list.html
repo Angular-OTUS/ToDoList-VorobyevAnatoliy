@@ -5,12 +5,14 @@
       <mat-spinner/>
     } @else {
       @for (task of tasks(); track task.id) {
-        <app-to-do-list-item
-          [task]="task"
-          [class.selected]="task.id === selectedItemId()"
-          (click)="onSelectTask(task.id)"
-          (keyup.enter)="onSelectTask(task.id)"
-          (deleteMe)="onDeleteTask(task.id)"
+        <app-to-do-list-item appTooltip
+                             [task]="task"
+                             [tooltipText]="task.description"
+                             [tooltipDelayMsecs]="5000"
+                             [class.selected]="task.id === selectedItemId()"
+                             (click)="onSelectTask(task.id)"
+                             (keyup.enter)="onSelectTask(task.id)"
+                             (deleteMe)="onDeleteTask(task.id)"
         />
       } @empty {
         <p class="tasks--empty">There is no active tasks!</p>
@@ -28,9 +30,10 @@
       [disabled]="newTaskTitleIsEmpty()"
       (click)="onAddTask(newTaskTitle(), newTaskDescription())"
     />
-    <textarea class="add-task--description" name="task-description" id="task-description" cols="30" rows="10" placeholder="Enter a task description" [(ngModel)]="newTaskDescription"></textarea>
+    <textarea class="add-task--description" name="task-description" id="task-description" cols="30" rows="10"
+              placeholder="Enter a task description" [(ngModel)]="newTaskDescription"></textarea>
   </div>
   <aside>
-    <textarea class="tasks-list--description">{{selectedTaskDescription()}}</textarea>
+    <textarea class="tasks-list--description">{{ selectedTaskDescription() }}</textarea>
   </aside>
 </main>

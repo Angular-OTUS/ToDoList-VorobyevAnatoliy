@@ -8,6 +8,7 @@ import {MatIconButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {Button} from '../button/button';
 import {getNextId} from '../../helpers/generator-id';
+import {TooltipDirective} from '../../directives/tooltip';
 
 @Component({
   selector: 'app-to-do-list',
@@ -22,6 +23,7 @@ import {getNextId} from '../../helpers/generator-id';
     MatIconButton,
     MatProgressSpinner,
     Button,
+    TooltipDirective,
   ],
   styleUrl: './to-do-list.css',
 })
