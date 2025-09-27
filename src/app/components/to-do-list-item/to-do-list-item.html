@@ -2,9 +2,10 @@
   <span class="task--title" tabindex="{{task().id}}">
     {{ task().text }}
   </span>
-  <app-button
-    [title]="'Delete'"
-    [action]="'delete'"
-    (click)="onDeleteTask()"
+  <app-button appTooltip
+              [title]="'Delete'"
+              [tooltipText]="'Delete todo: ' + task().text"
+              [action]="'delete'"
+              (click)="onDeleteTask()"
   />
 </li>
