@@ -10,3 +10,11 @@
   padding: 0 10px;
   color: #333;
 }
+
+:hover {
+  background-color: #ddd;
+}
+
+:host.selected li {
+  font-weight: bold;
+}
