@@ -1,7 +1,6 @@
-import {Component, computed, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {Task} from '../../models/task';
 import {FormsModule} from '@angular/forms';
-import {getTasks} from '../../services/storage';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatIconButton} from '@angular/material/button';
@@ -9,6 +8,7 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {Button} from '../button/button';
 import {getNextId} from '../../helpers/generator-id';
 import {TooltipDirective} from '../../directives/tooltip';
+import {TaskStorageService} from '../../services/task-storage.service';
 
 @Component({
   selector: 'app-to-do-list',
@@ -45,6 +45,8 @@ export class ToDoList implements OnInit {
 
   readonly selectedTaskDescription = computed(() => this.tasks().find(t => t.id === this.selectedItemId())?.description)
 
+  private storageService = inject(TaskStorageService);
+
   ngOnInit(): void {
     this.loadTasks()
   }
@@ -52,7 +54,7 @@ export class ToDoList implements OnInit {
   loadTasks(): void {
     this.isLoading.set(true)
     setTimeout(() => {
-      this.tasks.set(getTasks())
+      this.tasks.set(this.storageService.getTasks())
       this.isLoading.set(false)
     }, 500)
   }
