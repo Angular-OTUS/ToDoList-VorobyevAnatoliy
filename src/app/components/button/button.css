@@ -30,3 +30,17 @@
 .button--delete:hover {
   background-color: #900;
 }
+
+.button--save {
+  background-color: #2a3;
+  width: 80px;
+}
+
+.button--save:hover {
+  background-color: #253;
+}
+
+.button--save:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}

@@ -1,5 +1,10 @@
 <button
-  [ngClass]="{'button': true, 'button--add': isAdd(), 'button--delete': isDelete()}"
+  [ngClass]="{
+    'button': true,
+    'button--add': this.isAdd(),
+    'button--delete': this.isDelete(),
+    'button--save': this.isSave()
+  }"
   [disabled]="disabled()"
 >
   {{ title() }}

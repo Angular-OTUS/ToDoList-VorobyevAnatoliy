@@ -22,4 +22,6 @@ export class Button {
   readonly isAdd = computed(() => this.action() === 'add')
 
   readonly isDelete = computed(() => this.action() === 'delete')
+
+  readonly isSave = computed(() => this.action() === 'save')
 }
