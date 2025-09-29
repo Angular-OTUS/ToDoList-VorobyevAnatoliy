@@ -1,5 +1,5 @@
 <button
-  class="button button--{{action()}}"
+  [class]="'button button--' + action()"
   [disabled]="disabled()"
 >
   {{ title() }}
