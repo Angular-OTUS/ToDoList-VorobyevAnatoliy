@@ -1,8 +1,9 @@
-import {Component, model, output, signal} from '@angular/core';
+import {Component, inject, model, output, signal} from '@angular/core';
 import {Task} from '../../models/task';
 import {Button} from '../button/button';
 import {TooltipDirective} from '../../directives/tooltip';
 import {FormsModule} from '@angular/forms';
+import {ToastService} from '../../services/toast.service';
 
 @Component({
   selector: 'app-to-do-list-item',
@@ -23,6 +24,8 @@ export class ToDoListItem {
 
   readonly editMode = signal(false)
 
+  readonly toastService = inject(ToastService);
+
   onDeleteTask(): void {
     this.deleteMe.emit()
   }
@@ -31,6 +34,12 @@ export class ToDoListItem {
     this.task.update((t) => {
       return {...t, text: taskText};
     })
+    this.toastService.showSuccess(`Task '${this.task().text}' is updated to '${taskText}'`)
     this.editMode.set(false)
+  }
+
+  onDoubleClick() {
+    this.toastService.showInfo(`Task '${this.task().text}' is in editing mode`)
+    this.editMode.set(true)
   }
 }

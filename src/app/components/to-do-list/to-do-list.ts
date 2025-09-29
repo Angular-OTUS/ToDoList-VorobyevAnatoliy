@@ -9,6 +9,8 @@ import {Button} from '../button/button';
 import {getNextId} from '../../helpers/generator-id';
 import {TooltipDirective} from '../../directives/tooltip';
 import {TaskStorageService} from '../../services/task-storage.service';
+import {ToastService} from '../../services/toast.service';
+import {Toasts} from '../toasts/toasts';
 
 @Component({
   selector: 'app-to-do-list',
@@ -24,6 +26,7 @@ import {TaskStorageService} from '../../services/task-storage.service';
     MatProgressSpinner,
     Button,
     TooltipDirective,
+    Toasts,
   ],
   styleUrl: './to-do-list.css',
 })
@@ -47,6 +50,8 @@ export class ToDoList implements OnInit {
 
   private storageService = inject(TaskStorageService);
 
+  private toastService = inject(ToastService);
+
   ngOnInit(): void {
     this.loadTasks()
   }
@@ -63,16 +68,18 @@ export class ToDoList implements OnInit {
     this.selectedItemId.set(taskId)
   }
 
-  onDeleteTask(taskId: number): void {
+  onDeleteTask(taskId: number, taskText: string): void {
     this.tasks.update((taskList) => taskList.filter(task => task.id !== taskId))
+    this.toastService.showWarning(`Task '${taskText}' is deleted!`)
   }
 
-  onAddTask(taskTitle: string, taskDescription: string): void {
+  onAddTask(taskText: string, taskDescription: string): void {
     this.tasks.update((taskList) => [...taskList, {
       id: getNextId(taskList),
-      text: taskTitle,
+      text: taskText,
       description: taskDescription,
     }])
+    this.toastService.showSuccess(`Task '${taskText}' is successfully added`)
     this.newTaskTitle.set('')
     this.newTaskDescription.set('')
     this.selectedItemId.set(this.defaultTaskId)

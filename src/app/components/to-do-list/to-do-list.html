@@ -12,7 +12,7 @@
                              [class.selected]="task.id === selectedItemId()"
                              (click)="onSelectTask(task.id)"
                              (keyup.enter)="onSelectTask(task.id)"
-                             (deleteMe)="onDeleteTask(task.id)"
+                             (deleteMe)="onDeleteTask(task.id, task.text)"
         />
       } @empty {
         <p class="tasks--empty">There is no active tasks!</p>
@@ -36,5 +36,8 @@
   </div>
   <aside>
     <textarea class="tasks-list--description">{{ selectedTaskDescription() }}</textarea>
+  </aside>
+  <aside>
+    <app-toasts/>
   </aside>
 </main>
