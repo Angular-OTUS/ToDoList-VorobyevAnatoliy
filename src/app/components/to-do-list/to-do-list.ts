@@ -59,7 +59,10 @@ export class ToDoList implements OnInit {
   loadTasks(): void {
     this.isLoading.set(true)
     setTimeout(() => {
-      this.storageService.getTasks().subscribe(tasks => this.tasks.set(tasks))
+      this.storageService.getTasks().subscribe({
+        next: (tasks: Task[]) => this.tasks.set(tasks),
+        error: (error: Error) => this.toastService.showError(error.message),
+      })
       this.isLoading.set(false)
     }, 500)
   }
