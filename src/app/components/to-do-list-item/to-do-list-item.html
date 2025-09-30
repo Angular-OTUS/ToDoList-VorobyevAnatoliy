@@ -4,7 +4,14 @@
     tabindex="{{task().id}}"
 >
   @if (editMode()) {
-    <input class="task--title" type="text" name="taskText" id="taskText" #taskText [value]="task().text">
+    <input
+      class="task--title"
+      type="text"
+      name="taskText"
+      id="taskText"
+      #taskText
+      [value]="task().text"
+    >
     <app-button appTooltip
                 [title]="'Save'"
                 [tooltipText]="'Save (update) todo: ' + task().text"

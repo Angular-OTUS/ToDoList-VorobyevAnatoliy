@@ -1,7 +1,7 @@
 <div class="toasts-container">
   @for (toast of toasts(); track toast.id) {
-    <div [class]="'toast toast-' + toast.type">
+    <span [class]="'toast toast-' + toast.type">
       {{ toast.message }}
-    </div>
+    </span>
   }
 </div>
