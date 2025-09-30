@@ -1,18 +1,18 @@
-import { Injectable } from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {Task} from '../models/task';
+import {HttpClient} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TaskStorageService {
 
-  private tasks: Task[] = [
-    {id: 1, text: "Visit a market", description: "Buy milk and cat's food"},
-    {id: 2, text: "Wash the dishes", description: "Come on!"},
-    {id: 3, text: "Choose a gift", description: "Mom's birthday soon"},
-  ]
+  url = 'http://localhost:3000/tasks'
 
-  getTasks(): Task[] {
-    return this.tasks
+  private http = inject(HttpClient)
+
+  getTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.url)
   }
 }
