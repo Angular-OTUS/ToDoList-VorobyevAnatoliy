@@ -10,6 +10,7 @@ import {TooltipDirective} from '../../directives/tooltip';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
 import {Toasts} from '../toasts/toasts';
+import {LoadingSpinner} from '../loading-spinner/loading-spinner';
 
 @Component({
   selector: 'app-to-do-list',
@@ -26,6 +27,7 @@ import {Toasts} from '../toasts/toasts';
     Button,
     TooltipDirective,
     Toasts,
+    LoadingSpinner,
   ],
   styleUrl: './to-do-list.css',
 })

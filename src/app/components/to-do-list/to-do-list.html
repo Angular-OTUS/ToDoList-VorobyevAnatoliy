@@ -1,9 +1,7 @@
 <h1 class="title">Tasks list:</h1>
 <main class="tasks--container">
-  <ul class="tasks--list">
-    @if (isLoading()) {
-      <mat-spinner/>
-    } @else {
+  <app-loading-spinner [isLoading]="isLoading()">
+    <ul class="tasks--list">
       @for (task of tasks(); track task.id) {
         <app-to-do-list-item appTooltip
                              [task]="task"
@@ -17,8 +15,8 @@
       } @empty {
         <p class="tasks--empty">There is no active tasks!</p>
       }
-    }
-  </ul>
+    </ul>
+  </app-loading-spinner>
   <div class="add-task">
     <mat-form-field class="add-task--form-field">
       <mat-label>Enter a task name</mat-label>
