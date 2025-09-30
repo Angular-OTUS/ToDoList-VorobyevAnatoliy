@@ -25,12 +25,13 @@
       <input matInput class="add-task--input" type="text" [(ngModel)]="newTaskTitle" id="new-task-text">
     </mat-form-field>
     <app-button appTooltip
-                [title]="'Add'"
                 [tooltipText]="'Add new todo (task)'"
                 [action]="'add'"
                 [disabled]="newTaskTitleIsEmpty()"
                 (click)="onAddTask(newTaskTitle(), newTaskDescription())"
-    />
+    >
+      Add
+    </app-button>
     <textarea class="add-task--description" name="task-description" id="task-description" cols="30" rows="10"
               placeholder="Enter a task description" [(ngModel)]="newTaskDescription"></textarea>
   </div>

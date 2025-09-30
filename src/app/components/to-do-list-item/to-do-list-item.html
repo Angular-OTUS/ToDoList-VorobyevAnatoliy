@@ -13,20 +13,22 @@
       [value]="task().text"
     >
     <app-button appTooltip
-                [title]="'Save'"
                 [tooltipText]="'Save (update) todo: ' + task().text"
                 [action]="'save'"
                 (click)="onSaveTask(taskText.value)"
-    />
+    >
+      Save
+    </app-button>
   } @else {
     <span class="task--title">
       {{ task().text }}
     </span>
     <app-button appTooltip
-                [title]="'Delete'"
                 [tooltipText]="'Delete todo: ' + task().text"
                 [action]="'delete'"
                 (click)="onDeleteTask()"
-    />
+    >
+      Delete
+    </app-button>
   }
 </li>

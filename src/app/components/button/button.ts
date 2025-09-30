@@ -13,8 +13,6 @@ import {ActionType} from '../../models/button-action';
 })
 export class Button {
 
-  readonly title = input('');
-
   readonly disabled = input( false);
 
   readonly action = input<ActionType>('none')
