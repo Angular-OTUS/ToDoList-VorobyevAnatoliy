@@ -61,7 +61,7 @@ export class ToDoList implements OnInit {
     setTimeout(() => {
       this.storageService.getTasks().subscribe({
         next: (tasks: Task[]) => this.tasks.set(tasks),
-        error: (error: Error) => this.toastService.showError(error.message),
+        error: (error: Error) => this.toastService.showError(`Tasks can't be loaded. Probably should run app with 'npm start' instead of 'ng serve'.\n${error.message}`),
       })
       this.isLoading.set(false)
     }, 500)
