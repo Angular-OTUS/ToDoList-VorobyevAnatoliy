@@ -77,14 +77,20 @@ export class ToDoList implements OnInit {
   }
 
   onAddTask(taskText: string, taskDescription: string): void {
-    this.tasks.update((taskList) => [...taskList, {
-      id: getNextId(taskList),
+    const newTask: Task = {
+      id: getNextId(this.tasks()),
       text: taskText,
       description: taskDescription,
-    }])
-    this.toastService.showSuccess(`Task '${taskText}' is successfully added`)
-    this.newTaskTitle.set('')
-    this.newTaskDescription.set('')
-    this.selectedItemId.set(this.defaultTaskId)
+    }
+    this.tasks.update((taskList) => [...taskList, newTask])
+    this.storageService.addTask(newTask).subscribe({
+      next: (task: Task) => {
+        this.toastService.showSuccess(`Task '${task.text}' is successfully added`)
+        this.newTaskTitle.set('')
+        this.newTaskDescription.set('')
+        this.selectedItemId.set(this.defaultTaskId)
+      },
+      error: (error: Error) => this.toastService.showError(error.message),
+    })
   }
 }
