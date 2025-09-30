@@ -72,8 +72,13 @@ export class ToDoList implements OnInit {
   }
 
   onDeleteTask(taskId: number, taskText: string): void {
-    this.tasks.update((taskList) => taskList.filter(task => task.id !== taskId))
-    this.toastService.showWarning(`Task '${taskText}' is deleted!`)
+    this.storageService.deleteTask(taskId).subscribe({
+      next: () => {
+        this.tasks.update((tasks) => tasks.filter(t => t.id !== taskId))
+        this.toastService.showWarning(`Task '${taskText}' is deleted!`)
+      },
+      error: (error: Error) => this.toastService.showError(error.message),
+    })
   }
 
   onAddTask(taskText: string, taskDescription: string): void {
@@ -82,10 +87,10 @@ export class ToDoList implements OnInit {
       text: taskText,
       description: taskDescription,
     }
-    this.tasks.update((taskList) => [...taskList, newTask])
     this.storageService.addTask(newTask).subscribe({
       next: (task: Task) => {
         this.toastService.showSuccess(`Task '${task.text}' is successfully added`)
+        this.tasks.update((taskList) => [...taskList, task])
         this.newTaskTitle.set('')
         this.newTaskDescription.set('')
         this.selectedItemId.set(this.defaultTaskId)
