@@ -1,7 +1,6 @@
-import {Component, computed, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {Task} from '../../models/task';
 import {FormsModule} from '@angular/forms';
-import {getTasks} from '../../services/storage';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatIconButton} from '@angular/material/button';
@@ -9,6 +8,9 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {Button} from '../button/button';
 import {getNextId} from '../../helpers/generator-id';
 import {TooltipDirective} from '../../directives/tooltip';
+import {TaskStorageService} from '../../services/task-storage.service';
+import {ToastService} from '../../services/toast.service';
+import {Toasts} from '../toasts/toasts';
 
 @Component({
   selector: 'app-to-do-list',
@@ -24,6 +26,7 @@ import {TooltipDirective} from '../../directives/tooltip';
     MatProgressSpinner,
     Button,
     TooltipDirective,
+    Toasts,
   ],
   styleUrl: './to-do-list.css',
 })
@@ -45,6 +48,10 @@ export class ToDoList implements OnInit {
 
   readonly selectedTaskDescription = computed(() => this.tasks().find(t => t.id === this.selectedItemId())?.description)
 
+  private storageService = inject(TaskStorageService);
+
+  private toastService = inject(ToastService);
+
   ngOnInit(): void {
     this.loadTasks()
   }
@@ -52,7 +59,7 @@ export class ToDoList implements OnInit {
   loadTasks(): void {
     this.isLoading.set(true)
     setTimeout(() => {
-      this.tasks.set(getTasks())
+      this.tasks.set(this.storageService.getTasks())
       this.isLoading.set(false)
     }, 500)
   }
@@ -61,16 +68,18 @@ export class ToDoList implements OnInit {
     this.selectedItemId.set(taskId)
   }
 
-  onDeleteTask(taskId: number): void {
+  onDeleteTask(taskId: number, taskText: string): void {
     this.tasks.update((taskList) => taskList.filter(task => task.id !== taskId))
+    this.toastService.showWarning(`Task '${taskText}' is deleted!`)
   }
 
-  onAddTask(taskTitle: string, taskDescription: string): void {
+  onAddTask(taskText: string, taskDescription: string): void {
     this.tasks.update((taskList) => [...taskList, {
       id: getNextId(taskList),
-      text: taskTitle,
+      text: taskText,
       description: taskDescription,
     }])
+    this.toastService.showSuccess(`Task '${taskText}' is successfully added`)
     this.newTaskTitle.set('')
     this.newTaskDescription.set('')
     this.selectedItemId.set(this.defaultTaskId)

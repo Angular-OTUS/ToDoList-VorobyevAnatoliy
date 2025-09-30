@@ -1,11 +1,32 @@
-<li class="task">
-  <span class="task--title" tabindex="{{task().id}}">
-    {{ task().text }}
-  </span>
-  <app-button appTooltip
-              [title]="'Delete'"
-              [tooltipText]="'Delete todo: ' + task().text"
-              [action]="'delete'"
-              (click)="onDeleteTask()"
-  />
+<li class="task"
+    (dblclick)="onDoubleClick()"
+    (keyup.escape)="editMode.set(false)"
+    tabindex="{{task().id}}"
+>
+  @if (editMode()) {
+    <input
+      class="task--title"
+      type="text"
+      name="taskText"
+      id="taskText"
+      #taskText
+      [value]="task().text"
+    >
+    <app-button appTooltip
+                [title]="'Save'"
+                [tooltipText]="'Save (update) todo: ' + task().text"
+                [action]="'save'"
+                (click)="onSaveTask(taskText.value)"
+    />
+  } @else {
+    <span class="task--title">
+      {{ task().text }}
+    </span>
+    <app-button appTooltip
+                [title]="'Delete'"
+                [tooltipText]="'Delete todo: ' + task().text"
+                [action]="'delete'"
+                (click)="onDeleteTask()"
+    />
+  }
 </li>
