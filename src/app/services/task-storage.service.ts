@@ -1,5 +1,5 @@
 import {inject, Injectable} from '@angular/core';
-import {Task} from '../models/task';
+import {Task, TaskData} from '../models/task';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 
@@ -16,7 +16,7 @@ export class TaskStorageService {
     return this.http.get<Task[]>(this.url)
   }
 
-  addTask(task: Task): Observable<Task> {
+  addTask(task: TaskData): Observable<Task> {
     return this.http.post<Task>(this.url, task)
   }
 

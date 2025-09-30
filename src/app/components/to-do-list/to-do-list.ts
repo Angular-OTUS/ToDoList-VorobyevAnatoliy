@@ -1,12 +1,11 @@
 import {Component, computed, inject, OnInit, signal} from '@angular/core';
-import {Task} from '../../models/task';
+import {Task, TaskData} from '../../models/task';
 import {FormsModule} from '@angular/forms';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {MatIconButton} from '@angular/material/button';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {Button} from '../button/button';
-import {getNextId} from '../../helpers/generator-id';
 import {TooltipDirective} from '../../directives/tooltip';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
@@ -82,12 +81,11 @@ export class ToDoList implements OnInit {
   }
 
   onAddTask(taskText: string, taskDescription: string): void {
-    const newTask: Task = {
-      id: getNextId(this.tasks()),
+    const newTaskData: TaskData = {
       text: taskText,
       description: taskDescription,
     }
-    this.storageService.addTask(newTask).subscribe({
+    this.storageService.addTask(newTaskData).subscribe({
       next: (task: Task) => {
         this.toastService.showSuccess(`Task '${task.text}' is successfully added`)
         this.tasks.update((taskList) => [...taskList, task])
