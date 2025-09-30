@@ -4,6 +4,7 @@ import {Button} from '../button/button';
 import {TooltipDirective} from '../../directives/tooltip';
 import {FormsModule} from '@angular/forms';
 import {ToastService} from '../../services/toast.service';
+import {TaskStorageService} from '../../services/task-storage.service';
 
 @Component({
   selector: 'app-to-do-list-item',
@@ -24,6 +25,8 @@ export class ToDoListItem {
 
   readonly editMode = signal(false)
 
+  private storageService = inject(TaskStorageService);
+
   readonly toastService = inject(ToastService);
 
   onDeleteTask(): void {
@@ -31,15 +34,19 @@ export class ToDoListItem {
   }
 
   onSaveTask(taskText: string): void {
-    this.task.update((t) => {
-      return {...t, text: taskText};
+    const updatedTask: Task = { ...this.task(), text: taskText }
+    this.storageService.updateTask(updatedTask).subscribe({
+      next: (task: Task) => {
+        this.task.set(task)
+        this.editMode.set(false)
+        this.toastService.showSuccess(`Task '${this.task().text}' is updated to '${taskText}'`)
+      },
+      error: (error: Error) => this.toastService.showError(error.message),
     })
-    this.toastService.showSuccess(`Task '${this.task().text}' is updated to '${taskText}'`)
-    this.editMode.set(false)
   }
 
   onDoubleClick() {
-    this.toastService.showInfo(`Task '${this.task().text}' is in editing mode`)
     this.editMode.set(true)
+    this.toastService.showInfo(`Task '${this.task().text}' is in editing mode`)
   }
 }
