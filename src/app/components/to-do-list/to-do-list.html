@@ -3,9 +3,8 @@
   <app-loading-spinner [isLoading]="isLoading()">
     <ul class="tasks--list">
       @for (task of tasks(); track task.id) {
-        <app-to-do-list-item appTooltip
+        <app-to-do-list-item appTooltip [tooltipText]="task.description"
                              [task]="task"
-                             [tooltipText]="task.description"
                              [tooltipDelayMsecs]="5000"
                              [class.selected]="task.id === selectedItemId()"
                              (click)="onSelectTask(task.id)"
@@ -20,10 +19,12 @@
   <div class="add-task">
     <mat-form-field class="add-task--form-field">
       <mat-label>Enter a task name</mat-label>
-      <input matInput class="add-task--input" type="text" [(ngModel)]="newTaskTitle" id="new-task-text">
+      <input matInput class="add-task--input" type="text"  id="new-task-text"
+             [(ngModel)]="newTaskTitle"
+             (keyup.enter)="onAddTask(newTaskTitle(), newTaskDescription())"
+      >
     </mat-form-field>
-    <app-button appTooltip
-                [tooltipText]="'Add new todo (task)'"
+    <app-button appTooltip [tooltipText]="'Add new todo (task)'"
                 [action]="'add'"
                 [disabled]="newTaskTitleIsEmpty()"
                 (click)="onAddTask(newTaskTitle(), newTaskDescription())"

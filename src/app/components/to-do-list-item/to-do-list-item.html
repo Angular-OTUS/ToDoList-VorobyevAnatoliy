@@ -12,8 +12,7 @@
       #taskText
       [value]="task().text"
     >
-    <app-button appTooltip
-                [tooltipText]="'Save (update) todo: ' + task().text"
+    <app-button appTooltip [tooltipText]="'Save (update) todo: ' + task().text"
                 [action]="'save'"
                 (click)="onSaveTask(taskText.value)"
     >
@@ -23,8 +22,7 @@
     <span class="task--title">
       {{ task().text }}
     </span>
-    <app-button appTooltip
-                [tooltipText]="'Delete todo: ' + task().text"
+    <app-button appTooltip [tooltipText]="'Delete todo: ' + task().text"
                 [action]="'delete'"
                 (click)="onDeleteTask()"
     >
