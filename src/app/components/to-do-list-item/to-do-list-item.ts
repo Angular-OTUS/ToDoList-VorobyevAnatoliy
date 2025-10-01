@@ -1,5 +1,5 @@
-import {Component, inject, model, output, signal} from '@angular/core';
-import {Task} from '../../models/task';
+import {Component, computed, inject, model, output, signal} from '@angular/core';
+import {Task, TaskStatus} from '../../models/task';
 import {Button} from '../button/button';
 import {TooltipDirective} from '../../directives/tooltip';
 import {FormsModule} from '@angular/forms';
@@ -25,16 +25,18 @@ export class ToDoListItem {
 
   readonly editMode = signal(false)
 
-  private storageService = inject(TaskStorageService);
+  isCompleted = computed(() => this.task().status == TaskStatus.Completed);
 
-  readonly toastService = inject(ToastService);
+  private readonly storageService = inject(TaskStorageService);
+
+  private readonly toastService = inject(ToastService);
 
   onDeleteTask(): void {
     this.deleteMe.emit()
   }
 
   onSaveTask(taskText: string): void {
-    const updatedTask: Task = { ...this.task(), text: taskText }
+    const updatedTask: Task = {...this.task(), text: taskText}
     this.storageService.updateTask(updatedTask).subscribe({
       next: (task: Task) => {
         this.task.set(task)
@@ -48,5 +50,10 @@ export class ToDoListItem {
   onDoubleClick() {
     this.editMode.set(true)
     this.toastService.showInfo(`Task '${this.task().text}' is in editing mode`)
+  }
+
+  onStatusChange(evt: Event): void {
+    const checkbox = evt.target as HTMLInputElement
+    this.task.set({...this.task(), status: checkbox.checked ? TaskStatus.Completed : TaskStatus.InProgress})
   }
 }

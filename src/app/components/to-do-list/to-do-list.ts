@@ -1,5 +1,5 @@
 import {Component, computed, inject, OnInit, signal} from '@angular/core';
-import {Task, TaskData} from '../../models/task';
+import {Task, TaskData, TaskStatus} from '../../models/task';
 import {FormsModule} from '@angular/forms';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
@@ -86,6 +86,7 @@ export class ToDoList implements OnInit {
     const newTaskData: TaskData = {
       text: taskText,
       description: taskDescription,
+      status: TaskStatus.InProgress,
     }
     this.storageService.addTask(newTaskData).subscribe({
       next: (task: Task) => {

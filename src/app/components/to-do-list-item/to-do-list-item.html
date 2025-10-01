@@ -19,6 +19,7 @@
       Save
     </app-button>
   } @else {
+    <input type="checkbox" name="task--status" [value]="isCompleted()" (change)="onStatusChange($event)"/>
     <span class="task--title">
       {{ task().text }}
     </span>
