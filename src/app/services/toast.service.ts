@@ -7,25 +7,25 @@ import {getNextId} from '../helpers/generator-id';
 })
 export class ToastService {
 
-  readonly toasts = signal<Toast[]>([])
+  public readonly toasts = signal<Toast[]>([])
 
-  showInfo(message: string): void {
+  public showInfo(message: string): void {
     this.showToast({type: "info", message, durationMillis: 1500})
   }
 
-  showSuccess(message: string): void {
+  public showSuccess(message: string): void {
     this.showToast({type: "success", message, durationMillis: 3000})
   }
 
-  showWarning(message: string): void {
+  public showWarning(message: string): void {
     this.showToast({type: "warning", message, durationMillis: 5000})
   }
 
-  showError(message: string): void {
+  public showError(message: string): void {
     this.showToast({type: "error", message, durationMillis: 5000})
   }
 
-  showToast(toastData: ToastData): void {
+  public showToast(toastData: ToastData): void {
     const newToast: Toast = {...toastData, id: getNextId(this.toasts())}
     this.toasts.update((toasts) => [...toasts, newToast])
     setTimeout(() => {

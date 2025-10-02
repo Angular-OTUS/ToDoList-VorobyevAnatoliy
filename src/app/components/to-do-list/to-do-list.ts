@@ -33,21 +33,21 @@ import {LoadingSpinner} from '../loading-spinner/loading-spinner';
 })
 export class ToDoList implements OnInit {
 
-  private defaultTaskId = -1;
+  private DEFAULT_TASK_ID = -1;
 
-  readonly tasks = signal<Task[]>([])
+  protected readonly tasks = signal<Task[]>([])
 
-  readonly isLoading = signal(false)
+  protected readonly isLoading = signal(false)
 
-  readonly newTaskTitle = signal('')
+  protected readonly newTaskTitle = signal('')
 
-  readonly newTaskTitleIsEmpty = computed(() => !this.newTaskTitle().trim())
+  protected  readonly newTaskTitleIsEmpty = computed(() => !this.newTaskTitle().trim())
 
-  readonly newTaskDescription = signal('')
+  protected readonly newTaskDescription = signal('')
 
-  readonly selectedItemId = signal(this.defaultTaskId)
+  protected readonly selectedTaskId = signal(this.DEFAULT_TASK_ID)
 
-  readonly selectedTaskDescription = computed(() => this.tasks().find(t => t.id === this.selectedItemId())?.description)
+  protected readonly selectedTaskDescription = computed(() => this.tasks().find(t => t.id === this.selectedTaskId())?.description)
 
   private storageService = inject(TaskStorageService);
 
@@ -57,7 +57,7 @@ export class ToDoList implements OnInit {
     this.loadTasks()
   }
 
-  loadTasks(): void {
+  private loadTasks(): void {
     this.isLoading.set(true)
     setTimeout(() => {
       this.storageService.getTasks().subscribe({
@@ -68,11 +68,11 @@ export class ToDoList implements OnInit {
     }, 500)
   }
 
-  onSelectTask(taskId: number): void {
-    this.selectedItemId.set(taskId)
+  protected onSelectTask(taskId: number): void {
+    this.selectedTaskId.set(taskId)
   }
 
-  onDeleteTask(taskId: number, taskText: string): void {
+  protected onDeleteTask(taskId: number, taskText: string): void {
     this.storageService.deleteTask(taskId).subscribe({
       next: () => {
         this.tasks.update((tasks) => tasks.filter(t => t.id !== taskId))
@@ -82,7 +82,7 @@ export class ToDoList implements OnInit {
     })
   }
 
-  onAddTask(taskText: string, taskDescription: string): void {
+  protected onAddTask(taskText: string, taskDescription: string): void {
     const newTaskData: TaskData = {
       text: taskText,
       description: taskDescription,
@@ -94,7 +94,7 @@ export class ToDoList implements OnInit {
         this.tasks.update((taskList) => [...taskList, task])
         this.newTaskTitle.set('')
         this.newTaskDescription.set('')
-        this.selectedItemId.set(this.defaultTaskId)
+        this.selectedTaskId.set(this.DEFAULT_TASK_ID)
       },
       error: (error: Error) => this.toastService.showError(error.message),
     })

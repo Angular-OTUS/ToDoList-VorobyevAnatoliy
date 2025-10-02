@@ -19,23 +19,23 @@ import {TaskStorageService} from '../../services/task-storage.service';
 })
 export class ToDoListItem {
 
-  readonly task = model.required<Task>();
+  public readonly task = model.required<Task>();
 
-  readonly deleteMe = output<void>();
+  protected readonly deleteMe = output<void>();
 
-  readonly editMode = signal(false)
+  protected readonly editMode = signal(false)
 
-  isCompleted = computed(() => this.task().status == TaskStatus.Completed);
+  protected readonly isCompleted = computed(() => this.task().status == TaskStatus.Completed);
 
   private readonly storageService = inject(TaskStorageService);
 
   private readonly toastService = inject(ToastService);
 
-  onDeleteTask(): void {
+  protected onDeleteTask(): void {
     this.deleteMe.emit()
   }
 
-  onSaveTask(taskText: string): void {
+  protected onSaveTask(taskText: string): void {
     const updatedTask: Task = {...this.task(), text: taskText}
     this.storageService.updateTask(updatedTask).subscribe({
       next: (task: Task) => {
@@ -47,12 +47,12 @@ export class ToDoListItem {
     })
   }
 
-  onDoubleClick() {
+  protected onDoubleClick() {
     this.editMode.set(true)
     this.toastService.showInfo(`Task '${this.task().text}' is in editing mode`)
   }
 
-  onStatusChange(evt: Event): void {
+  protected onStatusChange(evt: Event): void {
     const checkbox = evt.target as HTMLInputElement
     this.task.set({...this.task(), status: checkbox.checked ? TaskStatus.Completed : TaskStatus.InProgress})
   }

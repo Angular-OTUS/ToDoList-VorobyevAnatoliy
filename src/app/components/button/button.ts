@@ -13,12 +13,12 @@ import {ActionType} from '../../models/button-action';
 })
 export class Button {
 
-  readonly disabled = input( false);
+  public readonly disabled = input( false);
 
-  readonly action = input<ActionType>('none')
+  public readonly action = input<ActionType>('none')
 
   @HostListener('click', ['$event'])
-  onClick(event: MouseEvent) {
+  protected onClick(event: MouseEvent) {
     event.stopPropagation();
   }
 }

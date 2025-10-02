@@ -6,7 +6,7 @@
         <app-to-do-list-item appTooltip [tooltipText]="task.description"
                              [task]="task"
                              [tooltipDelayMsecs]="5000"
-                             [class.selected]="task.id === selectedItemId()"
+                             [class.selected]="task.id === selectedTaskId()"
                              (click)="onSelectTask(task.id)"
                              (keyup.enter)="onSelectTask(task.id)"
                              (deleteMe)="onDeleteTask(task.id, task.text)"

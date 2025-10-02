@@ -6,9 +6,9 @@ import {Directive, ElementRef, HostListener, inject, input, OnDestroy, Renderer2
 })
 export class TooltipDirective implements OnDestroy {
 
-  readonly tooltipText = input.required<string>()
+  public readonly tooltipText = input.required<string>()
 
-  readonly tooltipDelayMsecs = input(1000)
+  public readonly tooltipDelayMsecs = input(1000)
 
   private tooltipElement?: HTMLElement;
 
@@ -21,7 +21,7 @@ export class TooltipDirective implements OnDestroy {
   private hideTimeoutId?: number
 
   @HostListener('mouseenter')
-  onMouseEnter(): void {
+  protected onMouseEnter(): void {
     if (!this.tooltipElement) {
       this.createToolTip()
     }
@@ -38,7 +38,7 @@ export class TooltipDirective implements OnDestroy {
   }
 
   @HostListener('mouseleave')
-  onMouseLeave(): void {
+  protected onMouseLeave(): void {
     this.isVisible.set(false);
     if (this.tooltipElement) {
       this.renderer.setStyle(this.tooltipElement, 'display', 'none');

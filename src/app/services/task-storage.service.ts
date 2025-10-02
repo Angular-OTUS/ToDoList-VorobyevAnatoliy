@@ -8,23 +8,23 @@ import {Observable} from 'rxjs';
 })
 export class TaskStorageService {
 
-  url = 'http://localhost:3000/tasks'
+  private URL_TASKS = 'http://localhost:3000/tasks'
 
   private http = inject(HttpClient)
 
-  getTasks(): Observable<Task[]> {
-    return this.http.get<Task[]>(this.url)
+  public getTasks(): Observable<Task[]> {
+    return this.http.get<Task[]>(this.URL_TASKS)
   }
 
-  addTask(task: TaskData): Observable<Task> {
-    return this.http.post<Task>(this.url, task)
+  public addTask(task: TaskData): Observable<Task> {
+    return this.http.post<Task>(this.URL_TASKS, task)
   }
 
-  deleteTask(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/${id}`)
+  public deleteTask(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.URL_TASKS}/${id}`)
   }
 
-  updateTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.url}/${task.id}`, task)
+  public updateTask(task: Task): Observable<Task> {
+    return this.http.put<Task>(`${this.URL_TASKS}/${task.id}`, task)
   }
 }

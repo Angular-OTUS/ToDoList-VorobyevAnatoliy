@@ -11,5 +11,5 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
   standalone: true,
 })
 export class LoadingSpinner {
-  isLoading = input.required()
+  public isLoading = input.required()
 }
