@@ -35,13 +35,12 @@ export class ToDoListItem {
     this.deleteMe.emit()
   }
 
-  protected onSaveTask(taskText: string): void {
-    const updatedTask: Task = {...this.task(), text: taskText}
-    this.storageService.updateTask(updatedTask).subscribe({
+  protected onSaveTask(text: string): void {
+    this.storageService.updateTask(this.task().id, {text}).subscribe({
       next: (task: Task) => {
         this.task.set(task)
         this.editMode.set(false)
-        this.toastService.showSuccess(`Task '${this.task().text}' is updated to '${taskText}'`)
+        this.toastService.showSuccess(`Task '${this.task().text}' is updated to '${text}'`)
       },
       error: (error: Error) => this.toastService.showError(error.message),
     })

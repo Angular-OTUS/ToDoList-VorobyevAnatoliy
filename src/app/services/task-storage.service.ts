@@ -24,7 +24,7 @@ export class TaskStorageService {
     return this.http.delete<void>(`${this.URL_TASKS}/${id}`)
   }
 
-  public updateTask(task: Task): Observable<Task> {
-    return this.http.put<Task>(`${this.URL_TASKS}/${task.id}`, task)
+  public updateTask(taskId: number, updatedData: Partial<TaskData>): Observable<Task> {
+    return this.http.put<Task>(`${this.URL_TASKS}/${taskId}`, updatedData)
   }
 }
