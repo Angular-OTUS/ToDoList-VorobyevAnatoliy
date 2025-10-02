@@ -53,6 +53,14 @@ export class ToDoListItem {
 
   protected onStatusChange(evt: Event): void {
     const checkbox = evt.target as HTMLInputElement
-    this.task.set({...this.task(), status: checkbox.checked ? TaskStatus.Completed : TaskStatus.InProgress})
+    const status: TaskStatus = checkbox.checked ? TaskStatus.Completed : TaskStatus.InProgress
+    this.storageService.updateTask(this.task().id, {status}).subscribe({
+      next: (task: Task) => {
+        console.log(task)
+        this.task.set(task)
+        this.toastService.showSuccess(`Status is updated for task '${this.task().text}'`)
+      },
+      error: (error: Error) => this.toastService.showError(error.message),
+    })
   }
 }

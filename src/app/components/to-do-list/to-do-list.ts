@@ -41,7 +41,7 @@ export class ToDoList implements OnInit {
 
   protected readonly newTaskTitle = signal('')
 
-  protected  readonly newTaskTitleIsEmpty = computed(() => !this.newTaskTitle().trim())
+  protected readonly newTaskTitleIsEmpty = computed(() => !this.newTaskTitle().trim())
 
   protected readonly newTaskDescription = signal('')
 
@@ -61,7 +61,10 @@ export class ToDoList implements OnInit {
     this.isLoading.set(true)
     setTimeout(() => {
       this.storageService.getTasks().subscribe({
-        next: (tasks: Task[]) => this.tasks.set(tasks),
+        next: (tasks: Task[]) => {
+          this.tasks.set(tasks)
+          this.toastService.showSuccess(`${this.tasks().length} tasks successfully loaded`)
+        },
         error: (error: Error) => this.toastService.showError(`Tasks can't be loaded. Probably should run app with 'npm start' instead of 'ng serve'.\n${error.message}`),
       })
       this.isLoading.set(false)

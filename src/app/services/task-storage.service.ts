@@ -25,6 +25,6 @@ export class TaskStorageService {
   }
 
   public updateTask(taskId: number, updatedData: Partial<TaskData>): Observable<Task> {
-    return this.http.put<Task>(`${this.URL_TASKS}/${taskId}`, updatedData)
+    return this.http.patch<Task>(`${this.URL_TASKS}/${taskId}`, updatedData)
   }
 }
