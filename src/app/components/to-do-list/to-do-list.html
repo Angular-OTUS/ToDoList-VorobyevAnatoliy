@@ -1,8 +1,9 @@
 <h1 class="title">Tasks list:</h1>
 <main class="tasks--container">
+<!--  <app-to-do-status-selector [(selectedStatus)]="filterStatus"/>-->
   <app-loading-spinner [isLoading]="isLoading()">
     <ul class="tasks--list">
-      @for (task of tasks(); track task.id) {
+      @for (task of filteredTasks(); track task.id) {
         <app-to-do-list-item appTooltip [tooltipText]="task.description"
                              [task]="task"
                              [tooltipDelayMsecs]="5000"

@@ -1,5 +1,5 @@
 import {Component, computed, inject, OnInit, signal} from '@angular/core';
-import {Task, TaskData, TaskStatus} from '../../models/task';
+import {Status, Task, TaskData, TaskStatus} from '../../models/task';
 import {FormsModule} from '@angular/forms';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
@@ -11,6 +11,7 @@ import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
 import {Toasts} from '../toasts/toasts';
 import {LoadingSpinner} from '../loading-spinner/loading-spinner';
+import {ToDoStatusSelector} from '../to-do-status-selector/to-do-status-selector';
 
 @Component({
   selector: 'app-to-do-list',
@@ -28,6 +29,7 @@ import {LoadingSpinner} from '../loading-spinner/loading-spinner';
     TooltipDirective,
     Toasts,
     LoadingSpinner,
+    ToDoStatusSelector,
   ],
   styleUrl: './to-do-list.css',
 })
@@ -36,6 +38,10 @@ export class ToDoList implements OnInit {
   private DEFAULT_TASK_ID = -1;
 
   protected readonly tasks = signal<Task[]>([])
+
+  protected readonly filterStatus = signal<Status>(TaskStatus.NotSet)
+
+  protected readonly filteredTasks = computed(() => this.tasks().filter((task) => task.status === this.filterStatus()));
 
   protected readonly isLoading = signal(false)
 

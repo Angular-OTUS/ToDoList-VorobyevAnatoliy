@@ -1,5 +1,5 @@
 import {Component, computed, inject, model, output, signal} from '@angular/core';
-import {Task, TaskStatus} from '../../models/task';
+import {Status, Task, TaskStatus} from '../../models/task';
 import {Button} from '../button/button';
 import {TooltipDirective} from '../../directives/tooltip';
 import {FormsModule} from '@angular/forms';
@@ -53,7 +53,7 @@ export class ToDoListItem {
 
   protected onStatusChange(evt: Event): void {
     const checkbox = evt.target as HTMLInputElement
-    const status: TaskStatus = checkbox.checked ? TaskStatus.Completed : TaskStatus.InProgress
+    const status: Status = checkbox.checked ? TaskStatus.Completed : TaskStatus.InProgress
     this.storageService.updateTask(this.task().id, {status}).subscribe({
       next: (task: Task) => {
         console.log(task)
