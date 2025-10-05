@@ -4,19 +4,30 @@
       "id": "1",
       "text": "Visit a market",
       "description": "Buy milk and cat's food",
-      "status": 0
+      "status": 1
     },
     {
       "id": "2",
       "text": "Wash the dishes",
       "description": "Come on!",
-      "status": 1
+      "status": 2
     },
     {
       "id": "3",
       "text": "Choose a gift",
       "description": "Mom's birthday soon",
-      "status": 0
+      "status": 1
+    },
+    {
+      "id": "d143",
+      "text": "dwasds",
+      "status": 2
+    },
+    {
+      "id": "25a3",
+      "text": "dasdas",
+      "description": "dasds",
+      "status": 2
     }
   ]
 }

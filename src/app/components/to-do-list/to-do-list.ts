@@ -1,5 +1,5 @@
 import {Component, computed, inject, OnInit, signal} from '@angular/core';
-import {Status, Task, TaskData, TaskStatus} from '../../models/task';
+import {Task, TaskData, TaskStatus} from '../../models/task';
 import {FormsModule} from '@angular/forms';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
@@ -39,9 +39,9 @@ export class ToDoList implements OnInit {
 
   protected readonly tasks = signal<Task[]>([])
 
-  protected readonly filterStatus = signal<Status>(TaskStatus.NotSet)
+  protected readonly filterStatus = signal<TaskStatus>(TaskStatus.NotSet)
 
-  protected readonly filteredTasks = computed(() => this.tasks().filter((task) => task.status === this.filterStatus()));
+  protected readonly filteredTasks = computed(() => this.tasks().filter((task) => this.filterStatus() == TaskStatus.NotSet || task.status === this.filterStatus()));
 
   protected readonly isLoading = signal(false)
 
@@ -70,6 +70,7 @@ export class ToDoList implements OnInit {
         next: (tasks: Task[]) => {
           this.tasks.set(tasks)
           this.toastService.showSuccess(`${this.tasks().length} tasks successfully loaded`)
+          console.log(tasks)
         },
         error: (error: Error) => this.toastService.showError(`Tasks can't be loaded. Probably should run app with 'npm start' instead of 'ng serve'.\n${error.message}`),
       })

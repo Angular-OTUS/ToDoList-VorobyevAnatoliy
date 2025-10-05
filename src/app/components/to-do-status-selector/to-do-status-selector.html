@@ -1,8 +1,8 @@
 <mat-form-field appearance="fill">
   <mat-label>Filter</mat-label>
   <mat-select [(value)]="selectedStatus" (selectionChange)="onChanged($event)">
-    @for (status of statuses; track status) {
-      <mat-option [value]="TaskStatus[status]">{{status}}</mat-option>
+    @for (status of TaskStatuses; track status) {
+      <mat-option [value]="status">{{status}}</mat-option>
     }
   </mat-select>
 </mat-form-field>

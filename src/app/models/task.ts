@@ -1,15 +1,19 @@
-export const TaskStatus = {
-  NotSet: 0,
-  InProgress: 1,
-  Completed: 2,
-} as const
+export const enum TaskStatus {
+  NotSet = 0,
+  InProgress= 1,
+  Completed = 2,
+}
 
-export type Status = typeof TaskStatus[keyof typeof TaskStatus];
+export const TaskStatuses: TaskStatus[] = [
+  TaskStatus.NotSet,
+  TaskStatus.InProgress,
+  TaskStatus.Completed,
+]
 
 export interface TaskData {
   text: string;
   description: string;
-  status: Status;
+  status: TaskStatus;
 }
 
 export interface Task extends TaskData {
