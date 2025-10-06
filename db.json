@@ -16,18 +16,17 @@
       "id": "3",
       "text": "Choose a gift",
       "description": "Mom's birthday soon",
-      "status": 1
+      "status": 2
     },
     {
       "id": "d143",
-      "text": "dwasds",
-      "status": 2
+      "text": "Make some tests",
+      "status": 1
     },
     {
       "id": "25a3",
-      "text": "dasdas",
-      "description": "dasds",
-      "status": 2
+      "text": "Learn rxjs",
+      "status": 1
     }
   ]
 }
