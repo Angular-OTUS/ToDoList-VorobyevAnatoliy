@@ -1,4 +1,4 @@
-import {Component, computed, inject, output, signal} from '@angular/core';
+import {Component, inject, OnInit, output, signal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatFormField} from '@angular/material/form-field';
 import {MatInput, MatLabel} from '@angular/material/input';
@@ -20,7 +20,7 @@ import {TooltipDirective} from '../../directives/tooltip';
   standalone: true,
   styleUrl: './to-do-create-item.css',
 })
-export class ToDoCreateItem {
+export class ToDoCreateItem implements OnInit{
 
   private formBuilder = inject(FormBuilder)
 
@@ -31,9 +31,12 @@ export class ToDoCreateItem {
 
   protected readonly newTaskData = output<TaskData>()
 
-  protected readonly newTaskTitle = signal('')
+  protected readonly newTaskTitleIsEmpty = signal(true)
 
-  protected readonly newTaskTitleIsEmpty = computed(() => !this.newTaskTitle().trim())
+  ngOnInit() {
+    this.createTaskForm.controls['name'].valueChanges
+      .subscribe((value: string) => this.newTaskTitleIsEmpty.set(value.length === 0))
+  }
 
   protected onSubmit(): void {
     this.newTaskData.emit({
