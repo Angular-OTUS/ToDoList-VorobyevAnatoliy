@@ -28,6 +28,7 @@
 
 .tasks--filter {
   grid-column: 2 / 3;
+  align-items: self-start;
 }
 
 .add-task {

@@ -1,6 +1,6 @@
 import {Component, model} from '@angular/core';
 import {MatOption, MatSelect, MatSelectChange} from '@angular/material/select';
-import {TaskStatus, TaskStatuses} from '../../models/task';
+import {Status, TaskStatus} from '../../models/task';
 import {FormsModule} from '@angular/forms';
 import {MatFormField, MatLabel} from '@angular/material/input';
 
@@ -19,11 +19,11 @@ import {MatFormField, MatLabel} from '@angular/material/input';
 })
 export class ToDoStatusSelector {
 
-  public selectedStatus = model<TaskStatus>(TaskStatus.NotSet)
+  public selectedStatus = model<Status>(TaskStatus.NotSet)
 
-  onChanged($event: MatSelectChange<TaskStatus>) {
+  protected readonly taskStatus = TaskStatus;
+
+  onChanged($event: MatSelectChange<Status>) {
     this.selectedStatus.set($event.value)
   }
-
-  protected readonly TaskStatuses = TaskStatuses;
 }

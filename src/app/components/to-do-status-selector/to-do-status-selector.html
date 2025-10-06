@@ -1,8 +1,8 @@
 <mat-form-field appearance="fill">
   <mat-label>Filter</mat-label>
   <mat-select [(value)]="selectedStatus" (selectionChange)="onChanged($event)">
-    @for (status of TaskStatuses; track status) {
-      <mat-option [value]="status">{{status}}</mat-option>
-    }
+    <mat-option [value]="taskStatus.NotSet">All tasks</mat-option>
+    <mat-option [value]="taskStatus.InProgress">In progress</mat-option>
+    <mat-option [value]="taskStatus.Completed">Completed</mat-option>
   </mat-select>
 </mat-form-field>

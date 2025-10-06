@@ -1,5 +1,5 @@
 import {Component, computed, inject, OnInit, signal} from '@angular/core';
-import {Task, TaskData, TaskStatus} from '../../models/task';
+import {Status, Task, TaskData, TaskStatus} from '../../models/task';
 import {FormsModule} from '@angular/forms';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
@@ -39,7 +39,7 @@ export class ToDoList implements OnInit {
 
   protected readonly tasks = signal<Task[]>([])
 
-  protected readonly filterStatus = signal<TaskStatus>(TaskStatus.NotSet)
+  protected readonly filterStatus = signal<Status>(TaskStatus.NotSet)
 
   protected readonly filteredTasks = computed(() => this.tasks().filter((task) => this.filterStatus() == TaskStatus.NotSet || task.status === this.filterStatus()));
 
