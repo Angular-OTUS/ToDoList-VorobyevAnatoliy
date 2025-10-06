@@ -70,12 +70,15 @@ export class ToDoList implements OnInit {
         next: (tasks: Task[]) => {
           this.tasks.set(tasks)
           this.toastService.showSuccess(`${this.tasks().length} tasks successfully loaded`)
-          console.log(tasks)
         },
         error: (error: Error) => this.toastService.showError(`Tasks can't be loaded. Probably should run app with 'npm start' instead of 'ng serve'.\n${error.message}`),
       })
       this.isLoading.set(false)
     }, 500)
+  }
+
+  protected onChangeTaskStatus(task: Task): void {
+    this.tasks.update(tasks => tasks.map(t => t.id === task.id ? task : t))
   }
 
   protected onSelectTask(taskId: number): void {

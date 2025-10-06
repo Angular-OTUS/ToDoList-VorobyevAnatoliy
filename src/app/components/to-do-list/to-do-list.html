@@ -10,6 +10,7 @@
                              (click)="onSelectTask(task.id)"
                              (keyup.enter)="onSelectTask(task.id)"
                              (deleteMe)="onDeleteTask(task.id, task.text)"
+                             (isStatusChanged)="onChangeTaskStatus($event)"
         />
       } @empty {
         <p class="tasks--empty">There is no active tasks!</p>

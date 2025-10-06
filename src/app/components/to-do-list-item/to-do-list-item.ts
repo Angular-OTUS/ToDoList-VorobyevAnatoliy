@@ -27,6 +27,8 @@ export class ToDoListItem {
 
   protected readonly isCompleted = computed(() => this.task().status == TaskStatus.Completed);
 
+  protected readonly isStatusChanged = output<Task>()
+
   private readonly storageService = inject(TaskStorageService);
 
   private readonly toastService = inject(ToastService);
@@ -56,8 +58,8 @@ export class ToDoListItem {
     const status: Status = checkbox.checked ? TaskStatus.Completed : TaskStatus.InProgress
     this.storageService.updateTask(this.task().id, {status}).subscribe({
       next: (task: Task) => {
-        console.log(task)
         this.task.set(task)
+        this.isStatusChanged.emit(task)
         this.toastService.showSuccess(`Status is updated for task '${this.task().text}'`)
       },
       error: (error: Error) => this.toastService.showError(error.message),
