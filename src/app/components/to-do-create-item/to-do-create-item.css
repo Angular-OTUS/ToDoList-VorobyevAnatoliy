@@ -1,0 +1,27 @@
+:host {
+  display: flex;
+  margin-top: 15px;
+  padding: 10px;
+  border: #253 dotted 1px;
+  border-radius: 4px;
+}
+
+.add-task--form-field {
+}
+
+.add-task--input {
+  border-radius: 4px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+.add-task--input:focus {
+  border-color: #777;
+}
+
+.add-task--description {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 5px 10px;
+  resize: vertical;
+}

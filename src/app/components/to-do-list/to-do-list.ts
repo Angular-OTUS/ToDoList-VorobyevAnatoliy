@@ -12,6 +12,7 @@ import {ToastService} from '../../services/toast.service';
 import {Toasts} from '../toasts/toasts';
 import {LoadingSpinner} from '../loading-spinner/loading-spinner';
 import {ToDoStatusSelector} from '../to-do-status-selector/to-do-status-selector';
+import {ToDoCreateItem} from '../to-do-create-item/to-do-create-item';
 
 @Component({
   selector: 'app-to-do-list',
@@ -30,6 +31,7 @@ import {ToDoStatusSelector} from '../to-do-status-selector/to-do-status-selector
     Toasts,
     LoadingSpinner,
     ToDoStatusSelector,
+    ToDoCreateItem,
   ],
   styleUrl: './to-do-list.css',
 })
@@ -44,12 +46,6 @@ export class ToDoList implements OnInit {
   protected readonly filteredTasks = computed(() => this.tasks().filter((task) => this.filterStatus() == TaskStatus.NotSet || task.status === this.filterStatus()));
 
   protected readonly isLoading = signal(false)
-
-  protected readonly newTaskTitle = signal('')
-
-  protected readonly newTaskTitleIsEmpty = computed(() => !this.newTaskTitle().trim())
-
-  protected readonly newTaskDescription = signal('')
 
   protected readonly selectedTaskId = signal(this.DEFAULT_TASK_ID)
 
@@ -95,18 +91,13 @@ export class ToDoList implements OnInit {
     })
   }
 
-  protected onAddTask(taskText: string, taskDescription: string): void {
-    const newTaskData: TaskData = {
-      text: taskText,
-      description: taskDescription,
-      status: TaskStatus.InProgress,
-    }
+  protected onAddTask(newTaskData: TaskData): void {
     this.storageService.addTask(newTaskData).subscribe({
       next: (task: Task) => {
         this.toastService.showSuccess(`Task '${task.text}' is successfully added`)
         this.tasks.update((taskList) => [...taskList, task])
-        this.newTaskTitle.set('')
-        this.newTaskDescription.set('')
+        // this.newTaskTitle.set('')
+        // this.newTaskDescription.set('')
         this.selectedTaskId.set(this.DEFAULT_TASK_ID)
       },
       error: (error: Error) => this.toastService.showError(error.message),

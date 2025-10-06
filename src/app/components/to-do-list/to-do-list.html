@@ -18,24 +18,9 @@
     </ul>
     <app-to-do-status-selector class="tasks--filter" [(selectedStatus)]="filterStatus"/>
   </app-loading-spinner>
-  <div class="add-task">
-    <mat-form-field class="add-task--form-field">
-      <mat-label>Enter a task name</mat-label>
-      <input matInput class="add-task--input" type="text"  id="new-task-text"
-             [(ngModel)]="newTaskTitle"
-             (keyup.enter)="onAddTask(newTaskTitle(), newTaskDescription())"
-      >
-    </mat-form-field>
-    <app-button appTooltip [tooltipText]="'Add new todo (task)'"
-                [action]="'add'"
-                [disabled]="newTaskTitleIsEmpty()"
-                (click)="onAddTask(newTaskTitle(), newTaskDescription())"
-    >
-      Add
-    </app-button>
-    <textarea class="add-task--description" name="task-description" id="task-description" cols="30" rows="10"
-              placeholder="Enter a task description" [(ngModel)]="newTaskDescription"></textarea>
-  </div>
+  <app-to-do-create-item
+    (newTaskData)="onAddTask($event)"
+  />
   <aside>
     <textarea class="tasks-list--description">{{ selectedTaskDescription() }}</textarea>
   </aside>

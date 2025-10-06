@@ -1,0 +1,25 @@
+<form
+  class="add-task"
+  [formGroup]="createTaskForm"
+  (ngSubmit)="onSubmit()"
+>
+  <input
+    class="add-task--input"
+    type="text"
+    id="new-task-text"
+    formControlName="name"
+    placeholder="Enter a task name"
+  />
+  <input
+    type="text"
+    formControlName="description"
+    placeholder="Enter a task description"
+  />
+  <button
+    type="submit"
+    appTooltip [tooltipText]="'Add new todo (task)'"
+    [disabled]="newTaskTitleIsEmpty()"
+  >
+    Add
+  </button>
+</form>
