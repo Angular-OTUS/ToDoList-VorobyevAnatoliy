@@ -2,10 +2,6 @@ import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {Status, Task, TaskData, TaskStatus} from '../../models/task';
 import {FormsModule} from '@angular/forms';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatIconButton} from '@angular/material/button';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {Button} from '../button/button';
 import {TooltipDirective} from '../../directives/tooltip';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
@@ -21,12 +17,6 @@ import {ToDoCreateItem} from '../to-do-create-item/to-do-create-item';
   imports: [
     FormsModule,
     ToDoListItem,
-    MatInput,
-    MatFormField,
-    MatLabel,
-    MatIconButton,
-    MatProgressSpinner,
-    Button,
     TooltipDirective,
     Toasts,
     LoadingSpinner,

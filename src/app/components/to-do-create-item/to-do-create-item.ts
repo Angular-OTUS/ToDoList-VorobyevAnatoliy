@@ -1,19 +1,12 @@
 import {Component, inject, OnInit, output, signal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatFormField} from '@angular/material/form-field';
-import {MatInput, MatLabel} from '@angular/material/input';
 import {TaskData, TaskStatus} from '../../models/task';
-import {Button} from '../button/button';
 import {TooltipDirective} from '../../directives/tooltip';
 
 @Component({
   selector: 'app-to-do-create-item',
   imports: [
     ReactiveFormsModule,
-    MatFormField,
-    MatInput,
-    MatLabel,
-    Button,
     TooltipDirective,
   ],
   templateUrl: './to-do-create-item.html',
