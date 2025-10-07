@@ -86,8 +86,6 @@ export class ToDoList implements OnInit {
       next: (task: Task) => {
         this.toastService.showSuccess(`Task '${task.text}' is successfully added`)
         this.tasks.update((taskList) => [...taskList, task])
-        // this.newTaskTitle.set('')
-        // this.newTaskDescription.set('')
         this.selectedTaskId.set(this.DEFAULT_TASK_ID)
       },
       error: (error: Error) => this.toastService.showError(error.message),

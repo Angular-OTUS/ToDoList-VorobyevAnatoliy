@@ -37,5 +37,6 @@ export class ToDoCreateItem implements OnInit{
       description: this.createTaskForm.value.description,
       status: TaskStatus.InProgress,
     })
+    this.createTaskForm.reset()
   }
 }
