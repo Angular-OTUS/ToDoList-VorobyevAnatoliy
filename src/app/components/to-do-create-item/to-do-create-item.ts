@@ -2,12 +2,14 @@ import {Component, inject, OnInit, output, signal} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {TaskData, TaskStatus} from '../../models/task';
 import {TooltipDirective} from '../../directives/tooltip';
+import {Button} from '../button/button';
 
 @Component({
   selector: 'app-to-do-create-item',
   imports: [
     ReactiveFormsModule,
     TooltipDirective,
+    Button,
   ],
   templateUrl: './to-do-create-item.html',
   standalone: true,
