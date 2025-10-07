@@ -3,6 +3,7 @@
   align-items: center;
   padding: 10px;
   border-bottom: 1px solid #ddd;
+  width: 500px;
 }
 
 .task--title {

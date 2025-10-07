@@ -10,8 +10,21 @@
 
 .tasks--container {
   max-width: 800px;
-  display: grid;
-  grid-template-columns: 1fr auto;
+  display: flex;
+  gap: 10px;
+}
+
+.section--tasks {
+  flex: 5;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.section--settings {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  box-sizing: border-box;
 }
 
 .tasks--empty {
@@ -20,20 +33,23 @@
 
 .tasks--list {
   list-style: none;
-  padding: 0;
-  margin: 0;
-  width: 100%;
-  grid-column: 1 / 2;
+  border: 1px solid #ddd;
+  padding: 10px;
 }
 
 .tasks--filter {
-  grid-column: 2 / 3;
-  align-items: self-start;
+  align-self: flex-start;
+}
+
+.tasks--add {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
 }
 
 .tasks-list--description {
-  margin: 15px 0 0 15px;
-  height: 90%;
-  min-width: 300px;
-  resize: vertical;
+  resize: horizontal;
+  min-width: 150px;
+  flex-grow: 1;
+  overflow-y: auto;
+  border: 1px solid #ddd;
 }
