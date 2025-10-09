@@ -1,0 +1,14 @@
+<h1 class="title">Tasks list</h1>
+<div class="tasks--container">
+  <section class="section--tasks">
+    <app-to-do-list #taskList/>
+    <app-to-do-create-item class="tasks --add" (newTaskData)="taskList.onAddTask($event)"/>
+  </section>
+  <section class="section--settings">
+    <app-to-do-status-selector class="tasks--filter" [(selectedStatus)]="taskList.filterStatus"/>
+    <textarea class="tasks-list--description">{{ taskList.selectedTaskDescription() }}</textarea>
+  </section>
+  <aside>
+    <app-toasts/>
+  </aside>
+</div>

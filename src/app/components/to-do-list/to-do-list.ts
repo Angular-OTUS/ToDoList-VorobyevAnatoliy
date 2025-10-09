@@ -31,7 +31,7 @@ export class ToDoList implements OnInit {
 
   protected readonly tasks = signal<Task[]>([])
 
-  protected readonly filterStatus = signal<Status>(TaskStatus.NotSet)
+  readonly filterStatus = signal<Status>(TaskStatus.NotSet)
 
   protected readonly filteredTasks = computed(() => this.tasks().filter((task) => this.filterStatus() == TaskStatus.NotSet || task.status === this.filterStatus()));
 
@@ -39,7 +39,7 @@ export class ToDoList implements OnInit {
 
   protected readonly selectedTaskId = signal(this.DEFAULT_TASK_ID)
 
-  protected readonly selectedTaskDescription = computed(() => this.tasks().find(t => t.id === this.selectedTaskId())?.description)
+  readonly selectedTaskDescription = computed(() => this.tasks().find(t => t.id === this.selectedTaskId())?.description)
 
   private storageService = inject(TaskStorageService);
 
@@ -81,7 +81,7 @@ export class ToDoList implements OnInit {
     })
   }
 
-  protected onAddTask(newTaskData: TaskData): void {
+  onAddTask(newTaskData: TaskData): void {
     this.storageService.addTask(newTaskData).subscribe({
       next: (task: Task) => {
         this.toastService.showSuccess(`Task '${task.text}' is successfully added`)
