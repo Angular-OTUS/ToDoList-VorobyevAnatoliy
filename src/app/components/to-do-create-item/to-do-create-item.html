@@ -20,7 +20,7 @@
     class="add-task--button"
     type="submit"
     [action]="'save'"
-    appTooltip [tooltipText]="'Add new todo (task)'"
+    [appTooltip]="'Add new todo (task)'"
     [disabled]="newTaskTitleIsEmpty()"
   >
     Add

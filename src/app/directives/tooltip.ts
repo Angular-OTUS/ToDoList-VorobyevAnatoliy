@@ -6,9 +6,9 @@ import {Directive, ElementRef, HostListener, inject, input, OnDestroy, Renderer2
 })
 export class TooltipDirective implements OnDestroy {
 
-  public readonly tooltipText = input.required<string>()
+  public readonly appTooltip = input.required<string>()
 
-  public readonly tooltipDelayMsecs = input(1000)
+  public readonly appTooltipDelayMsecs = input(1000)
 
   private tooltipElement?: HTMLElement;
 
@@ -34,7 +34,7 @@ export class TooltipDirective implements OnDestroy {
     }
     setTimeout(() => {
       this.hideTooltip()
-    }, this.tooltipDelayMsecs())
+    }, this.appTooltipDelayMsecs())
   }
 
   @HostListener('mouseleave')
@@ -49,7 +49,7 @@ export class TooltipDirective implements OnDestroy {
     this.tooltipElement = this.renderer.createElement('span')
     this.renderer.appendChild(document.body, this.tooltipElement)
     this.renderer.addClass(this.tooltipElement, 'app-tooltip');
-    this.renderer.setProperty(this.tooltipElement, 'textContent', this.tooltipText());
+    this.renderer.setProperty(this.tooltipElement, 'textContent', this.appTooltip());
   }
 
   private setPosition() {

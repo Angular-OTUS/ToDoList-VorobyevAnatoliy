@@ -5,9 +5,8 @@
       <ul>
         @for (task of filteredTasks(); track task.id) {
           <app-to-do-list-item
-            appTooltip [tooltipText]="task.description"
+            [appTooltip]="task.description" [appTooltipDelayMsecs]="5000"
             [task]="task"
-            [tooltipDelayMsecs]="5000"
             [class.selected]="task.id === selectedTaskId()"
             (click)="onSelectTask(task.id)"
             (keyup.enter)="onSelectTask(task.id)"
