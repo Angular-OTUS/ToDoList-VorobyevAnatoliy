@@ -10,7 +10,7 @@ import {ToastService} from '../../services/toast.service';
 })
 export class Toasts {
 
-  readonly toasts = computed(() => this.toastService.toasts());
+  protected readonly toasts = computed(() => this.toastService.toasts());
 
-  readonly toastService = inject(ToastService)
+  private readonly toastService = inject(ToastService)
 }

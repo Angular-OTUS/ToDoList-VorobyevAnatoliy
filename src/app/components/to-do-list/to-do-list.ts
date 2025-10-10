@@ -1,16 +1,15 @@
 import {Component, computed, inject, OnInit, signal} from '@angular/core';
-import {Task} from '../../models/task';
+import {Status, Task, TaskData, TaskStatus} from '../../models/task';
 import {FormsModule} from '@angular/forms';
 import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
-import {MatFormField, MatInput, MatLabel} from '@angular/material/input';
-import {MatIconButton} from '@angular/material/button';
-import {MatProgressSpinner} from '@angular/material/progress-spinner';
-import {Button} from '../button/button';
-import {getNextId} from '../../helpers/generator-id';
 import {TooltipDirective} from '../../directives/tooltip';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
 import {Toasts} from '../toasts/toasts';
+import {LoadingSpinner} from '../loading-spinner/loading-spinner';
+import {ToDoStatusSelector} from '../to-do-status-selector/to-do-status-selector';
+import {ToDoCreateItem} from '../to-do-create-item/to-do-create-item';
+import {catchError, EMPTY, tap} from 'rxjs';
 
 @Component({
   selector: 'app-to-do-list',
@@ -19,34 +18,29 @@ import {Toasts} from '../toasts/toasts';
   imports: [
     FormsModule,
     ToDoListItem,
-    MatInput,
-    MatFormField,
-    MatLabel,
-    MatIconButton,
-    MatProgressSpinner,
-    Button,
     TooltipDirective,
     Toasts,
+    LoadingSpinner,
+    ToDoStatusSelector,
+    ToDoCreateItem,
   ],
   styleUrl: './to-do-list.css',
 })
 export class ToDoList implements OnInit {
 
-  private defaultTaskId = -1;
+  private DEFAULT_TASK_ID = -1;
 
-  readonly tasks = signal<Task[]>([])
+  protected readonly tasks = signal<Task[]>([])
 
-  readonly isLoading = signal(false)
+  protected readonly filterStatus = signal<Status>(TaskStatus.NotSet)
 
-  readonly newTaskTitle = signal('')
+  protected readonly filteredTasks = computed(() => this.tasks().filter((task) => this.filterStatus() == TaskStatus.NotSet || task.status === this.filterStatus()));
 
-  readonly newTaskTitleIsEmpty = computed(() => !this.newTaskTitle().trim())
+  protected readonly isLoading = signal(false)
 
-  readonly newTaskDescription = signal('')
+  protected readonly selectedTaskId = signal(this.DEFAULT_TASK_ID)
 
-  readonly selectedItemId = signal(this.defaultTaskId)
-
-  readonly selectedTaskDescription = computed(() => this.tasks().find(t => t.id === this.selectedItemId())?.description)
+  protected readonly selectedTaskDescription = computed(() => this.tasks().find(t => t.id === this.selectedTaskId())?.description)
 
   private storageService = inject(TaskStorageService);
 
@@ -56,32 +50,61 @@ export class ToDoList implements OnInit {
     this.loadTasks()
   }
 
-  loadTasks(): void {
+  private loadTasks(): void {
     this.isLoading.set(true)
     setTimeout(() => {
-      this.tasks.set(this.storageService.getTasks())
+      this.storageService.getTasks()
+        .pipe(
+          tap((tasks: Task[]) => {
+            this.tasks.set(tasks)
+            this.toastService.showSuccess(`${this.tasks().length} tasks successfully loaded`)
+          }),
+          catchError((error: Error) => {
+            this.toastService.showError(`Tasks can't be loaded. Probably should run app with 'npm start' instead of 'ng serve'.\n${error.message}`)
+            return EMPTY
+          }),
+        )
+        .subscribe()
       this.isLoading.set(false)
     }, 500)
   }
 
-  onSelectTask(taskId: number): void {
-    this.selectedItemId.set(taskId)
+  protected onChangeTaskStatus(task: Task): void {
+    this.tasks.update(tasks => tasks.map(t => t.id === task.id ? task : t))
   }
 
-  onDeleteTask(taskId: number, taskText: string): void {
-    this.tasks.update((taskList) => taskList.filter(task => task.id !== taskId))
-    this.toastService.showWarning(`Task '${taskText}' is deleted!`)
+  protected onSelectTask(taskId: number): void {
+    this.selectedTaskId.set(taskId)
   }
 
-  onAddTask(taskText: string, taskDescription: string): void {
-    this.tasks.update((taskList) => [...taskList, {
-      id: getNextId(taskList),
-      text: taskText,
-      description: taskDescription,
-    }])
-    this.toastService.showSuccess(`Task '${taskText}' is successfully added`)
-    this.newTaskTitle.set('')
-    this.newTaskDescription.set('')
-    this.selectedItemId.set(this.defaultTaskId)
+  protected onDeleteTask(taskId: number, taskText: string): void {
+    this.storageService.deleteTask(taskId)
+      .pipe(
+        tap(() => {
+          this.tasks.update((tasks) => tasks.filter(t => t.id !== taskId))
+          this.toastService.showWarning(`Task '${taskText}' is deleted!`)
+        }),
+        catchError((error: Error) => {
+          this.toastService.showError(error.message)
+          return EMPTY
+        }),
+      )
+      .subscribe()
+  }
+
+  protected onAddTask(newTaskData: TaskData): void {
+    this.storageService.addTask(newTaskData)
+      .pipe(
+        tap((task: Task) => {
+          this.toastService.showSuccess(`Task '${task.text}' is successfully added`)
+          this.tasks.update((taskList) => [...taskList, task])
+          this.selectedTaskId.set(this.DEFAULT_TASK_ID)
+        }),
+        catchError((error: Error) => {
+          this.toastService.showError(error.message)
+          return EMPTY
+        }),
+      )
+      .subscribe()
   }
 }

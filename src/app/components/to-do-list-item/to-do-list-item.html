@@ -12,21 +12,29 @@
       #taskText
       [value]="task().text"
     >
-    <app-button appTooltip
-                [title]="'Save'"
-                [tooltipText]="'Save (update) todo: ' + task().text"
-                [action]="'save'"
-                (click)="onSaveTask(taskText.value)"
-    />
+    <app-button
+      [appTooltip]="'Save (update) todo: ' + task().text"
+      [action]="'save'"
+      (click)="onSaveTask(taskText.value)"
+    >
+      Save
+    </app-button>
   } @else {
+    <input
+      type="checkbox"
+      name="task--status"
+      [checked]="isCompleted()"
+      (change)="onStatusChange($event)"
+    />
     <span class="task--title">
       {{ task().text }}
     </span>
-    <app-button appTooltip
-                [title]="'Delete'"
-                [tooltipText]="'Delete todo: ' + task().text"
-                [action]="'delete'"
-                (click)="onDeleteTask()"
-    />
+    <app-button
+      [appTooltip]="'Delete todo: ' + task().text"
+      [action]="'delete'"
+      (click)="onDeleteTask()"
+    >
+      Delete
+    </app-button>
   }
 </li>

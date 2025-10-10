@@ -1,0 +1,32 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "text": "Visit a market",
+      "description": "Buy milk and cat's food",
+      "status": 1
+    },
+    {
+      "id": "2",
+      "text": "Wash the dishes",
+      "description": "Come on!",
+      "status": 2
+    },
+    {
+      "id": "3",
+      "text": "Choose a gift",
+      "description": "Mom's birthday soon",
+      "status": 2
+    },
+    {
+      "id": "d143",
+      "text": "Make some tests",
+      "status": 1
+    },
+    {
+      "id": "25a3",
+      "text": "Learn rxjs",
+      "status": 1
+    }
+  ]
+}
