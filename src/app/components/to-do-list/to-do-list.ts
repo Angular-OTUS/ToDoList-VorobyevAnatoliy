@@ -30,21 +30,21 @@ export class ToDoList implements OnInit {
 
   private DEFAULT_TASK_ID = -1;
 
-  protected readonly tasks = signal<Task[]>([])
+  private storageService = inject(TaskStorageService);
+
+  private toastService = inject(ToastService);
+
+  protected readonly tasks = this.storageService.tasks
+
+  protected readonly selectedTaskId = signal(this.DEFAULT_TASK_ID)
+
+  readonly selectedTask = computed(() => this.tasks().find(t => t.id === this.selectedTaskId()))
 
   readonly filterStatus = signal<Status>(TaskStatus.NotSet)
 
   protected readonly filteredTasks = computed(() => this.tasks().filter((task) => this.filterStatus() == TaskStatus.NotSet || task.status === this.filterStatus()));
 
   protected readonly isLoading = signal(false)
-
-  protected readonly selectedTaskId = signal(this.DEFAULT_TASK_ID)
-
-  readonly selectedTask = computed(() => this.tasks().find(t => t.id === this.selectedTaskId()))
-
-  private storageService = inject(TaskStorageService);
-
-  private toastService = inject(ToastService);
 
   ngOnInit(): void {
     this.loadTasks()
@@ -53,10 +53,9 @@ export class ToDoList implements OnInit {
   private loadTasks(): void {
     this.isLoading.set(true)
     setTimeout(() => {
-      this.storageService.getTasks()
+      this.storageService.fetchTasks()
         .pipe(
-          tap((tasks: Task[]) => {
-            this.tasks.set(tasks)
+          tap(() => {
             this.toastService.showSuccess(`${this.tasks().length} tasks successfully loaded`)
           }),
           catchError((error: Error) => {
@@ -70,7 +69,7 @@ export class ToDoList implements OnInit {
   }
 
   protected onChangeTaskStatus(task: Task): void {
-    this.tasks.update(tasks => tasks.map(t => t.id === task.id ? task : t))
+    this.storageService.updateTask(task.id, {status: task.status})
   }
 
   protected onSelectTask(taskId: number): void {
@@ -81,7 +80,6 @@ export class ToDoList implements OnInit {
     this.storageService.deleteTask(taskId)
       .pipe(
         tap(() => {
-          this.tasks.update((tasks) => tasks.filter(t => t.id !== taskId))
           this.toastService.showWarning(`Task '${taskText}' is deleted!`)
         }),
         catchError((error: Error) => {
@@ -97,8 +95,7 @@ export class ToDoList implements OnInit {
       .pipe(
         tap((task: Task) => {
           this.toastService.showSuccess(`Task '${task.text}' is successfully added`)
-          this.tasks.update((taskList) => [...taskList, task])
-          this.selectedTaskId.set(this.DEFAULT_TASK_ID)
+          this.selectedTaskId.set(task.id)
         }),
         catchError((error: Error) => {
           this.toastService.showError(error.message)

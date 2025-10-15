@@ -1,7 +1,7 @@
-import {DestroyRef, inject, Injectable} from '@angular/core';
+import {DestroyRef, inject, Injectable, signal} from '@angular/core';
 import {Task, TaskData} from '../models/task';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -15,26 +15,32 @@ export class TaskStorageService {
 
   private destroy$ = inject(DestroyRef)
 
-  public getTasks(): Observable<Task[]> {
+  readonly tasks = signal<Task[]>([])
+
+  public fetchTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.URL_TASKS).pipe(
+      tap((tasks: Task[]) => this.tasks.set(tasks)),
       takeUntilDestroyed(this.destroy$),
     )
   }
 
   public addTask(task: TaskData): Observable<Task> {
     return this.http.post<Task>(this.URL_TASKS, task).pipe(
+      tap((task: Task) => this.tasks.update((tasks: Task[]) => [...tasks, task])),
       takeUntilDestroyed(this.destroy$),
     )
   }
 
   public deleteTask(id: number): Observable<void> {
     return this.http.delete<void>(`${this.URL_TASKS}/${id}`).pipe(
+      tap(() => this.tasks.update((tasks: Task[]) => tasks.filter(t => t.id !== id))),
       takeUntilDestroyed(this.destroy$),
     )
   }
 
   public updateTask(taskId: number, updatedData: Partial<TaskData>): Observable<Task> {
     return this.http.patch<Task>(`${this.URL_TASKS}/${taskId}`, updatedData).pipe(
+      tap((task: Task) => this.tasks.update((tasks: Task[]) => tasks.map(t => t.id === taskId ? task : t))),
       takeUntilDestroyed(this.destroy$),
     )
   }

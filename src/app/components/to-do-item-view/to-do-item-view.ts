@@ -26,12 +26,10 @@ export class ToDoItemView {
     }
     const checkbox = evt.target as HTMLInputElement
     const status: Status = checkbox.checked ? TaskStatus.Completed : TaskStatus.InProgress
-    this.storageService.updateTask(this.task()!.id, {status}).subscribe({
-      next: (task: Task) => {
-        this.task.set(task)
-        this.toastService.showSuccess(`Status is updated for task '${this.task()!.text}'`)
-      },
-      error: (error: Error) => this.toastService.showError(error.message),
-    })
+    this.storageService.updateTask(this.task()!.id, {status})
+      .subscribe({
+        next: () => this.toastService.showSuccess(`Status is updated for task '${this.task()!.text}'`),
+        error: (error: Error) => this.toastService.showError(error.message),
+      })
   }
 }
