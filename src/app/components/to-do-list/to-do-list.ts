@@ -7,8 +7,6 @@ import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
 import {Toasts} from '../toasts/toasts';
 import {LoadingSpinner} from '../loading-spinner/loading-spinner';
-import {ToDoStatusSelector} from '../to-do-status-selector/to-do-status-selector';
-import {ToDoCreateItem} from '../to-do-create-item/to-do-create-item';
 import {catchError, EMPTY, tap} from 'rxjs';
 
 @Component({
@@ -21,8 +19,6 @@ import {catchError, EMPTY, tap} from 'rxjs';
     TooltipDirective,
     Toasts,
     LoadingSpinner,
-    ToDoStatusSelector,
-    ToDoCreateItem,
   ],
   styleUrl: './to-do-list.css',
 })
