@@ -40,7 +40,7 @@ export class ToDoList implements OnInit {
 
   protected readonly selectedTaskId = signal(this.DEFAULT_TASK_ID)
 
-  readonly selectedTaskDescription = computed(() => this.tasks().find(t => t.id === this.selectedTaskId())?.description)
+  readonly selectedTask = computed(() => this.tasks().find(t => t.id === this.selectedTaskId()))
 
   private storageService = inject(TaskStorageService);
 
@@ -92,7 +92,7 @@ export class ToDoList implements OnInit {
       .subscribe()
   }
 
-  protected onAddTask(newTaskData: TaskData): void {
+  onAddTask(newTaskData: TaskData): void {
     this.storageService.addTask(newTaskData)
       .pipe(
         tap((task: Task) => {

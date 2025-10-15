@@ -6,7 +6,8 @@
   </section>
   <section class="section--settings">
     <app-to-do-status-selector class="tasks--filter" [(selectedStatus)]="taskList.filterStatus"/>
-    <textarea class="tasks-list--description">{{ taskList.selectedTaskDescription() }}</textarea>
+    <app-to-do-item-view [task]="taskList.selectedTask()"/>
+<!--    <textarea class="tasks-list&#45;&#45;description">{{ taskList.selectedTaskDescription() }}</textarea>-->
   </section>
   <aside>
     <app-toasts/>
