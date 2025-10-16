@@ -4,6 +4,7 @@ import {ToDoCreateItem} from '../../components/to-do-create-item/to-do-create-it
 import {ToDoList} from '../../components/to-do-list/to-do-list';
 import {Toasts} from '../../components/toasts/toasts';
 import {ToDoItemView} from '../../components/to-do-item-view/to-do-item-view';
+import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -13,6 +14,7 @@ import {ToDoItemView} from '../../components/to-do-item-view/to-do-item-view';
     ToDoList,
     Toasts,
     ToDoItemView,
+    RouterOutlet,
   ],
   templateUrl: './tasks.html',
   standalone: true,

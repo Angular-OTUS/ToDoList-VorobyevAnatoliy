@@ -6,7 +6,7 @@
   </section>
   <section class="section--settings">
     <app-to-do-status-selector class="tasks--filter" [(selectedStatus)]="taskList.filterStatus"/>
-    <app-to-do-item-view [task]="taskList.selectedTask()" [id]="taskList.selectedTask()?.id!"/>
+    <router-outlet/>
   </section>
   <aside>
     <app-toasts/>

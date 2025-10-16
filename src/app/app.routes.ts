@@ -1,6 +1,7 @@
 import {Routes} from '@angular/router';
+import {ToDoItemView} from './components/to-do-item-view/to-do-item-view';
 
-export const ROUTES = {
+export const ROUTE_CONFIG = {
   MAIN: '',
   TASKS_LIST: 'tasks',
   TASK_ID: ':id',
@@ -8,28 +9,28 @@ export const ROUTES = {
 
 export const routes: Routes = [
   {
-    path: ROUTES.MAIN,
-    redirectTo: ROUTES.TASKS_LIST,
+    path: ROUTE_CONFIG.MAIN,
+    redirectTo: ROUTE_CONFIG.TASKS_LIST,
     pathMatch: "full",
   },
   {
-    path: ROUTES.TASKS_LIST,
+    path: ROUTE_CONFIG.TASKS_LIST,
     loadComponent: () => import('./pages/tasks/tasks').then(c => c.Tasks),
     title: 'Todo List',
     children: [
       {
-        path: ROUTES.TASK_ID,
-        loadComponent: () => import('./components/to-do-item-view/to-do-item-view').then(c => c.ToDoItemView),
+        path: ROUTE_CONFIG.TASK_ID,
+        component: ToDoItemView,
       },
     ],
   },
   {
-    path: ROUTES.TASK_ID,
+    path: ROUTE_CONFIG.TASK_ID,
     loadComponent: () => import('./pages/tasks/tasks').then(c => c.Tasks),
     title: 'Todo List',
   },
   {
     path: '**',
-    redirectTo: ROUTES.TASKS_LIST,
+    redirectTo: ROUTE_CONFIG.TASKS_LIST,
   },
 ];

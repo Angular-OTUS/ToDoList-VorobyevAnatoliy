@@ -8,6 +8,8 @@ import {ToastService} from '../../services/toast.service';
 import {Toasts} from '../toasts/toasts';
 import {LoadingSpinner} from '../loading-spinner/loading-spinner';
 import {catchError, EMPTY, tap} from 'rxjs';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ROUTE_CONFIG} from '../../app.routes';
 
 @Component({
   selector: 'app-to-do-list',
@@ -26,6 +28,10 @@ export class ToDoList implements OnInit {
 
   private DEFAULT_TASK_ID = -1;
 
+  private route = inject(ActivatedRoute)
+
+  private router = inject(Router);
+
   private storageService = inject(TaskStorageService);
 
   private toastService = inject(ToastService);
@@ -33,8 +39,6 @@ export class ToDoList implements OnInit {
   protected readonly tasks = this.storageService.tasks
 
   protected readonly selectedTaskId = signal(this.DEFAULT_TASK_ID)
-
-  readonly selectedTask = computed(() => this.tasks().find(t => t.id === this.selectedTaskId()))
 
   readonly filterStatus = signal<Status>(TaskStatus.NotSet)
 
@@ -70,6 +74,12 @@ export class ToDoList implements OnInit {
 
   protected onSelectTask(taskId: number): void {
     this.selectedTaskId.set(taskId)
+    this.router.navigate([taskId], {relativeTo: this.route})
+  }
+
+  protected onClearSelection() {
+    this.selectedTaskId.set(this.DEFAULT_TASK_ID)
+    this.router.navigate([ROUTE_CONFIG.TASKS_LIST])
   }
 
   protected onDeleteTask(taskId: number, taskText: string): void {
