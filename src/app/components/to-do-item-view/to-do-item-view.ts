@@ -2,13 +2,9 @@ import {Component, computed, inject, input, model} from '@angular/core';
 import {Status, Task, TaskStatus} from '../../models/task';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
-import {RouterOutlet} from '@angular/router';
 
 @Component({
   selector: 'app-to-do-item-view',
-  imports: [
-    RouterOutlet,
-  ],
   templateUrl: './to-do-item-view.html',
   standalone: true,
   styleUrl: './to-do-item-view.css',

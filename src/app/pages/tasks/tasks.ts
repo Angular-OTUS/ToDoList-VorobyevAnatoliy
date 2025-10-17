@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {ToDoStatusSelector} from '../../components/to-do-status-selector/to-do-status-selector';
 import {ToDoCreateItem} from '../../components/to-do-create-item/to-do-create-item';
 import {ToDoList} from '../../components/to-do-list/to-do-list';
 import {Toasts} from '../../components/toasts/toasts';
-import {ToDoItemView} from '../../components/to-do-item-view/to-do-item-view';
 import {RouterOutlet} from '@angular/router';
 
 @Component({
@@ -13,7 +12,6 @@ import {RouterOutlet} from '@angular/router';
     ToDoCreateItem,
     ToDoList,
     Toasts,
-    ToDoItemView,
     RouterOutlet,
   ],
   templateUrl: './tasks.html',

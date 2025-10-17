@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import {ToDoList} from './components/to-do-list/to-do-list';
+import {Component} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 
 @Component({
@@ -7,7 +6,7 @@ import {RouterOutlet} from '@angular/router';
   templateUrl: './app.html',
   standalone: true,
   styleUrl: './app.css',
-  imports: [ToDoList, RouterOutlet],
+  imports: [RouterOutlet],
 })
 export class App {
 }
