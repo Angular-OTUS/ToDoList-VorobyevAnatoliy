@@ -2,12 +2,11 @@
   <ul>
     @for (task of filteredTasks(); track task.id) {
       <app-to-do-list-item
+        routerLinkActive="selected"
+        [routerLink]="task.id.toString()"
         [appTooltip]="task.description" [appTooltipDelayMsecs]="5000"
         [task]="task"
-        [class.selected]="task.id === selectedTaskId()"
-        (click)="onSelectTask(task.id)"
-        (keyup.enter)="onSelectTask(task.id)"
-        (keyup.escape)="onClearSelection()"
+        (keyup.escape)="router.navigateByUrl('/')"
         (deleteMe)="onDeleteTask(task.id, task.text)"
         (isStatusChanged)="onChangeTaskStatus($event)"
       />

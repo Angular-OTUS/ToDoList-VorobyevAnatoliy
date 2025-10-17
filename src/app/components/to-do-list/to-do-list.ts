@@ -5,11 +5,9 @@ import {ToDoListItem} from '../to-do-list-item/to-do-list-item';
 import {TooltipDirective} from '../../directives/tooltip';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
-import {Toasts} from '../toasts/toasts';
 import {LoadingSpinner} from '../loading-spinner/loading-spinner';
 import {catchError, EMPTY, tap} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ROUTE_CONFIG} from '../../app.routes';
+import {Router, RouterLink, RouterLinkActive} from '@angular/router';
 
 @Component({
   selector: 'app-to-do-list',
@@ -19,26 +17,21 @@ import {ROUTE_CONFIG} from '../../app.routes';
     FormsModule,
     ToDoListItem,
     TooltipDirective,
-    Toasts,
     LoadingSpinner,
+    RouterLink,
+    RouterLinkActive,
   ],
   styleUrl: './to-do-list.css',
 })
 export class ToDoList implements OnInit {
 
-  private DEFAULT_TASK_ID = -1;
-
-  private route = inject(ActivatedRoute)
-
-  private router = inject(Router);
+  protected router = inject(Router);
 
   private storageService = inject(TaskStorageService);
 
   private toastService = inject(ToastService);
 
   protected readonly tasks = this.storageService.tasks
-
-  protected readonly selectedTaskId = signal(this.DEFAULT_TASK_ID)
 
   readonly filterStatus = signal<Status>(TaskStatus.NotSet)
 
@@ -72,16 +65,6 @@ export class ToDoList implements OnInit {
     this.storageService.updateTask(task.id, {status: task.status})
   }
 
-  protected onSelectTask(taskId: number): void {
-    this.selectedTaskId.set(taskId)
-    this.router.navigate([taskId], {relativeTo: this.route})
-  }
-
-  protected onClearSelection() {
-    this.selectedTaskId.set(this.DEFAULT_TASK_ID)
-    this.router.navigate([ROUTE_CONFIG.TASKS_LIST])
-  }
-
   protected onDeleteTask(taskId: number, taskText: string): void {
     this.storageService.deleteTask(taskId)
       .pipe(
@@ -101,7 +84,6 @@ export class ToDoList implements OnInit {
       .pipe(
         tap((task: Task) => {
           this.toastService.showSuccess(`Task '${task.text}' is successfully added`)
-          this.selectedTaskId.set(task.id)
         }),
         catchError((error: Error) => {
           this.toastService.showError(error.message)
