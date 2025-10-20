@@ -1,4 +1,4 @@
-<label for="checkbox">
+<label class="checkbox-label" for="checkbox">
   <input
     id="checkbox"
     type="checkbox"
@@ -8,5 +8,9 @@
   />
   Completed
 </label>
-<p>{{ task()?.text }}</p>
-<textarea>{{ task()?.description }}</textarea>
+<p class="task-title">
+  {{ task()?.text }}
+</p>
+<textarea class="task-description">
+  {{ task()?.description }}
+</textarea>
