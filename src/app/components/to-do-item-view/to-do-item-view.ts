@@ -1,5 +1,5 @@
-import {Component, computed, inject, input, model} from '@angular/core';
-import {Status, Task, TaskStatus} from '../../models/task';
+import {Component, computed, inject, input} from '@angular/core';
+import {Status, TaskStatus} from '../../models/task';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
 
@@ -11,15 +11,15 @@ import {ToastService} from '../../services/toast.service';
 })
 export class ToDoItemView {
 
-  id = input.required<number>()
-
-  task = model<Task>()
-
-  isCompleted = computed(() => this.task()?.status == TaskStatus.Completed);
-
   storageService = inject(TaskStorageService)
 
   toastService = inject(ToastService)
+
+  id = input.required<number>()
+
+  task = computed(() => this.storageService.tasks().find(t => t.id === this.id()))
+
+  isCompleted = computed(() => this.task()?.status == TaskStatus.Completed);
 
   protected onStatusChange(evt: Event): void {
     if (!this.task()) {
