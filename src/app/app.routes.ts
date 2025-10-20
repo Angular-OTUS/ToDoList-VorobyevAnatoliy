@@ -1,5 +1,4 @@
 import {Routes} from '@angular/router';
-import {ToDoItemView} from './components/to-do-item-view/to-do-item-view';
 
 export const ROUTE_CONFIG = {
   MAIN: '',
@@ -20,7 +19,7 @@ export const routes: Routes = [
     children: [
       {
         path: ROUTE_CONFIG.TASK_ID,
-        component: ToDoItemView,
+        loadComponent: () => import('./components/to-do-item-view/to-do-item-view').then(c => c.ToDoItemView),
       },
     ],
   },
