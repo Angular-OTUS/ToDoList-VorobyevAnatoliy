@@ -1,4 +1,5 @@
 import {Routes} from '@angular/router';
+import {taskIdGuard} from './components/to-do-item-view/to-do-item-view';
 
 export const ROUTE_CONFIG = {
   MAIN: '',
@@ -20,13 +21,9 @@ export const routes: Routes = [
       {
         path: ROUTE_CONFIG.TASK_ID,
         loadComponent: () => import('./components/to-do-item-view/to-do-item-view').then(c => c.ToDoItemView),
+        canActivate: [taskIdGuard],
       },
     ],
-  },
-  {
-    path: ROUTE_CONFIG.TASK_ID,
-    loadComponent: () => import('./pages/tasks/tasks').then(c => c.Tasks),
-    title: 'Todo List',
   },
   {
     path: '**',

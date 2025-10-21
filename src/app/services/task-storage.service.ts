@@ -1,8 +1,8 @@
 import {DestroyRef, inject, Injectable, signal} from '@angular/core';
 import {Task, TaskData} from '../models/task';
 import {HttpClient} from '@angular/common/http';
-import {Observable, tap} from 'rxjs';
-import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {map, Observable, tap} from 'rxjs';
+import {takeUntilDestroyed, toObservable} from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -16,6 +16,16 @@ export class TaskStorageService {
   private destroy$ = inject(DestroyRef)
 
   readonly tasks = signal<Task[]>([])
+
+  public isTaskExist(taskId: string): Observable<boolean> {
+    console.log('call isTaskExist with taskId', taskId);
+    return toObservable(this.tasks).pipe(
+      map(tasks => tasks.some(t => t.id.toString() === taskId)),
+      tap(() => console.log('tasks:', this.tasks())),
+      tap((result) => console.log('result', result)),
+      takeUntilDestroyed(this.destroy$),
+    )
+  }
 
   public fetchTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.URL_TASKS).pipe(

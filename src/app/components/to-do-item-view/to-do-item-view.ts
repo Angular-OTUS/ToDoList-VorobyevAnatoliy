@@ -2,6 +2,19 @@ import {Component, computed, inject, input} from '@angular/core';
 import {Status, TaskStatus} from '../../models/task';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
+import {ActivatedRouteSnapshot, CanActivateFn, Router} from '@angular/router';
+import {map} from 'rxjs';
+
+export const taskIdGuard: CanActivateFn = (
+  route: ActivatedRouteSnapshot,
+) => {
+  const storageService = inject(TaskStorageService)
+  const router = inject(Router)
+  const taskId: string = route.params['id']
+  return storageService.isTaskExist(taskId).pipe(
+    map(exists => exists || router.parseUrl('/tasks')),
+  )
+}
 
 @Component({
   selector: 'app-to-do-item-view',
