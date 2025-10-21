@@ -2,18 +2,18 @@ import {Component, computed, inject, input} from '@angular/core';
 import {Status, TaskStatus} from '../../models/task';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
-import {ActivatedRouteSnapshot, CanActivateFn, Router} from '@angular/router';
-import {map} from 'rxjs';
+import {ActivatedRouteSnapshot, CanActivateFn, Router, UrlTree} from '@angular/router';
 
-export const taskIdGuard: CanActivateFn = (
+export const taskExistsGuard: CanActivateFn = (
   route: ActivatedRouteSnapshot,
-) => {
+): boolean | UrlTree => {
   const storageService = inject(TaskStorageService)
   const router = inject(Router)
   const taskId: string = route.params['id']
-  return storageService.isTaskExist(taskId).pipe(
-    map(exists => exists || router.parseUrl('/tasks')),
-  )
+  if (taskId && storageService.isTaskExist(taskId)) {
+    return true
+  }
+  return router.parseUrl('/tasks')
 }
 
 @Component({
