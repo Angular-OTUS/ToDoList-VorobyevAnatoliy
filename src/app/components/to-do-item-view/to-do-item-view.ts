@@ -2,18 +2,30 @@ import {Component, computed, inject, input} from '@angular/core';
 import {Status, TaskStatus} from '../../models/task';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
-import {ActivatedRouteSnapshot, CanActivateFn, Router, UrlTree} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivateChildFn, Router, UrlTree} from '@angular/router';
+import {Observable, of, switchMap} from 'rxjs';
 
-export const taskExistsGuard: CanActivateFn = (
+function checkTaskExists(taskService: TaskStorageService, router: Router, taskId: string) {
+  const exists = taskService.isTaskExist(taskId);
+  if (exists) {
+    return of(true);
+  }
+  return router.navigate(['/tasks']);
+}
+
+export const taskExistsGuard: CanActivateChildFn = (
   route: ActivatedRouteSnapshot,
-): boolean | UrlTree => {
+): Observable<boolean> | Promise<boolean> | UrlTree => {
   const storageService = inject(TaskStorageService)
   const router = inject(Router)
   const taskId: string = route.params['id']
-  if (taskId && storageService.isTaskExist(taskId)) {
-    return true
+
+  if (storageService.tasks().length) {
+    return checkTaskExists(storageService, router, taskId);
   }
-  return router.parseUrl('/tasks')
+  return storageService.fetchTasks().pipe(
+    switchMap(() => checkTaskExists(storageService, router, taskId)),
+  )
 }
 
 @Component({

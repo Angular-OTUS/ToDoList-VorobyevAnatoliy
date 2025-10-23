@@ -31,11 +31,9 @@ export class ToDoList implements OnInit {
 
   private toastService = inject(ToastService);
 
-  protected readonly tasks = this.storageService.tasks
-
   readonly filterStatus = signal<Status>(TaskStatus.NotSet)
 
-  protected readonly filteredTasks = computed(() => this.tasks().filter((task) => this.filterStatus() == TaskStatus.NotSet || task.status === this.filterStatus()));
+  protected readonly filteredTasks = computed(() => this.storageService.tasks().filter((task) => this.filterStatus() == TaskStatus.NotSet || task.status === this.filterStatus()));
 
   protected readonly isLoading = signal(false)
 
@@ -49,7 +47,7 @@ export class ToDoList implements OnInit {
       this.storageService.fetchTasks()
         .pipe(
           tap(() => {
-            this.toastService.showSuccess(`${this.tasks().length} tasks successfully loaded`)
+            this.toastService.showSuccess(`${this.storageService.tasks().length} tasks successfully loaded`)
           }),
           catchError((error: Error) => {
             this.toastService.showError(`Tasks can't be loaded. Probably should run app with 'npm start' instead of 'ng serve'.\n${error.message}`)

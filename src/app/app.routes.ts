@@ -17,11 +17,11 @@ export const routes: Routes = [
     path: ROUTE_CONFIG.TASKS_LIST,
     loadComponent: () => import('./pages/tasks/tasks').then(c => c.Tasks),
     title: 'Todo List',
+    canActivateChild: [taskExistsGuard],
     children: [
       {
         path: ROUTE_CONFIG.TASK_ID,
         loadComponent: () => import('./components/to-do-item-view/to-do-item-view').then(c => c.ToDoItemView),
-        canActivate: [taskExistsGuard],
       },
     ],
   },

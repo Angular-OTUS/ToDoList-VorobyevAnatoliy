@@ -18,21 +18,8 @@ export class TaskStorageService {
   readonly tasks = signal<Task[]>([])
 
   public isTaskExist(taskId: string): boolean {
-    const result = this.tasks().some(t => t.id.toString() === taskId)
-    console.log("tasks now:", this.tasks())
-    console.log(`call isTaskExist with taskId ${taskId}, \nresult = ${result}`);
-    return result
+    return this.tasks().some(t => t.id.toString() === taskId)
   }
-
-  // public isTaskExist(taskId: string): Observable<boolean> {
-  //   console.log('call isTaskExist with taskId', taskId);
-  //   return toObservable(this.tasks).pipe(
-  //     map(tasks => tasks.some(t => t.id.toString() === taskId)),
-  //     tap(() => console.log('tasks:', this.tasks())),
-  //     tap((result) => console.log('result', result)),
-  //     takeUntilDestroyed(this.destroy$),
-  //   )
-  // }
 
   public fetchTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.URL_TASKS).pipe(
