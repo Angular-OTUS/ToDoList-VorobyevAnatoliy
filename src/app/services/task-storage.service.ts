@@ -1,7 +1,7 @@
 import {DestroyRef, inject, Injectable, signal} from '@angular/core';
 import {Task, TaskData} from '../models/task';
 import {HttpClient} from '@angular/common/http';
-import {Observable, tap} from 'rxjs';
+import {catchError, Observable, of, tap} from 'rxjs';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Injectable({
@@ -24,6 +24,10 @@ export class TaskStorageService {
   public fetchTasks(): Observable<Task[]> {
     return this.http.get<Task[]>(this.URL_TASKS).pipe(
       tap((tasks: Task[]) => this.tasks.set(tasks)),
+      catchError(() => {
+        this.tasks.set([]);
+        return of([])
+      }),
       takeUntilDestroyed(this.destroy$),
     )
   }
