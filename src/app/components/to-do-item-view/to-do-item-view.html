@@ -1,0 +1,16 @@
+<label class="checkbox-label" for="checkbox">
+  <input
+    id="checkbox"
+    type="checkbox"
+    name="task--status"
+    [checked]="isCompleted()"
+    (change)="onStatusChange($event)"
+  />
+  Completed
+</label>
+<p class="task-title">
+  {{ task()?.text }}
+</p>
+<textarea class="task-description">
+  {{ task()?.description }}
+</textarea>

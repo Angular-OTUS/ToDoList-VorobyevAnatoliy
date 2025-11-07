@@ -38,14 +38,15 @@ export class ToDoListItem {
   }
 
   protected onSaveTask(text: string): void {
-    this.storageService.updateTask(this.task().id, {text}).subscribe({
-      next: (task: Task) => {
-        this.task.set(task)
-        this.editMode.set(false)
-        this.toastService.showSuccess(`Task '${this.task().text}' is updated to '${text}'`)
-      },
-      error: (error: Error) => this.toastService.showError(error.message),
-    })
+    this.storageService.updateTask(this.task().id, {text})
+      .subscribe({
+        next: (task: Task) => {
+          this.task.set(task)
+          this.editMode.set(false)
+          this.toastService.showSuccess(`Task '${this.task().text}' is updated to '${text}'`)
+        },
+        error: (error: Error) => this.toastService.showError(error.message),
+      })
   }
 
   protected onDoubleClick() {
@@ -56,13 +57,14 @@ export class ToDoListItem {
   protected onStatusChange(evt: Event): void {
     const checkbox = evt.target as HTMLInputElement
     const status: Status = checkbox.checked ? TaskStatus.Completed : TaskStatus.InProgress
-    this.storageService.updateTask(this.task().id, {status}).subscribe({
-      next: (task: Task) => {
-        this.task.set(task)
-        this.isStatusChanged.emit(task)
-        this.toastService.showSuccess(`Status is updated for task '${this.task().text}'`)
-      },
-      error: (error: Error) => this.toastService.showError(error.message),
-    })
+    this.storageService.updateTask(this.task().id, {status})
+      .subscribe({
+        next: (task: Task) => {
+          this.task.set(task)
+          this.isStatusChanged.emit(task)
+          this.toastService.showSuccess(`Status is updated for task '${this.task().text}'`)
+        },
+        error: (error: Error) => this.toastService.showError(error.message),
+      })
   }
 }

@@ -1,0 +1,33 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  align-items: center;
+  min-width: 150px;
+  flex-grow: 1;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.checkbox-label {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 8px;
+  gap: 4px;
+}
+
+.task-title {
+  text-align: center;
+  margin: 8px 0;
+  width: 100%;
+}
+
+.task-description {
+  flex-grow: 1;
+  width: 100%;
+  resize: horizontal;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 8px;
+}

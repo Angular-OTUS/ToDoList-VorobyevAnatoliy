@@ -39,7 +39,7 @@ export class ToDoCreateItem implements OnInit {
   private subscribeOnChanges() {
     this.createTaskForm.controls['name'].valueChanges.pipe(
       takeUntilDestroyed(this.destroy$),
-      tap((value: string) => this.newTaskTitleIsEmpty.set(value.length === 0)),
+      tap((value: string) => this.newTaskTitleIsEmpty.set(value === null || value.length === 0)),
     ).subscribe()
   }
 

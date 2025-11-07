@@ -1,0 +1,37 @@
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #333;
+  border-bottom: 2px solid;
+  margin-top: 10px;
+  padding: 8px 15px;
+  letter-spacing: 0.02em;
+}
+
+.tasks--container {
+  max-width: 800px;
+  display: flex;
+  gap: 10px;
+}
+
+.section--tasks {
+  flex: 5;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.section--settings {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.tasks--filter {
+  align-self: flex-start;
+}
+
+.tasks--add {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+}

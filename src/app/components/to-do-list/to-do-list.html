@@ -1,30 +1,17 @@
-<h1 class="title">Tasks list:</h1>
-<main class="tasks--container">
-  <section class="section--tasks">
-    <app-loading-spinner class="tasks--list" [isLoading]="isLoading()">
-      <ul>
-        @for (task of filteredTasks(); track task.id) {
-          <app-to-do-list-item
-            [appTooltip]="task.description" [appTooltipDelayMsecs]="5000"
-            [task]="task"
-            [class.selected]="task.id === selectedTaskId()"
-            (click)="onSelectTask(task.id)"
-            (keyup.enter)="onSelectTask(task.id)"
-            (deleteMe)="onDeleteTask(task.id, task.text)"
-            (isStatusChanged)="onChangeTaskStatus($event)"
-          />
-        } @empty {
-          <p class="tasks--empty">There is no active tasks!</p>
-        }
-      </ul>
-    </app-loading-spinner>
-    <app-to-do-create-item class="tasks--add" (newTaskData)="onAddTask($event)"/>
-  </section>
-  <section class="section--settings">
-    <app-to-do-status-selector class="tasks--filter" [(selectedStatus)]="filterStatus"/>
-    <textarea class="tasks-list--description">{{ selectedTaskDescription() }}</textarea>
-  </section>
-  <aside>
-    <app-toasts/>
-  </aside>
-</main>
+<app-loading-spinner class="tasks--list" [isLoading]="isLoading()">
+  <ul>
+    @for (task of filteredTasks(); track task.id) {
+      <app-to-do-list-item
+        routerLinkActive="selected"
+        [routerLink]="task.id.toString()"
+        [appTooltip]="task.description" [appTooltipDelayMsecs]="5000"
+        [task]="task"
+        (keyup.escape)="router.navigateByUrl('/')"
+        (deleteMe)="onDeleteTask(task.id, task.text)"
+        (isStatusChanged)="onChangeTaskStatus($event)"
+      />
+    } @empty {
+      <p class="tasks--empty">There is no active tasks!</p>
+    }
+  </ul>
+</app-loading-spinner>
