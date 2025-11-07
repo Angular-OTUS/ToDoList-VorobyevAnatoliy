@@ -2,33 +2,6 @@ import {Component, computed, inject, input} from '@angular/core';
 import {Status, TaskStatus} from '../../models/task';
 import {TaskStorageService} from '../../services/task-storage.service';
 import {ToastService} from '../../services/toast.service';
-import {ActivatedRouteSnapshot, CanActivateChildFn, Router, UrlTree} from '@angular/router';
-import {Observable, of, switchMap} from 'rxjs';
-
-import {ROUTE_PARAMS, ROUTE_PATHS} from '../../const';
-
-function checkTaskExists(taskService: TaskStorageService, router: Router, taskId: string) {
-  const exists = taskService.isTaskExist(taskId);
-  if (exists) {
-    return of(true);
-  }
-  return router.navigate([`/${ROUTE_PATHS.TASKS}`]);
-}
-
-export const taskExistsGuard: CanActivateChildFn = (
-  route: ActivatedRouteSnapshot,
-): Observable<boolean> | Promise<boolean> | UrlTree => {
-  const storageService = inject(TaskStorageService)
-  const router = inject(Router)
-  const taskId: string = route.params[ROUTE_PARAMS.TASK_ID]
-
-  if (storageService.tasks().length) {
-    return checkTaskExists(storageService, router, taskId);
-  }
-  return storageService.fetchTasks().pipe(
-    switchMap(() => checkTaskExists(storageService, router, taskId)),
-  )
-}
 
 @Component({
   selector: 'app-to-do-item-view',

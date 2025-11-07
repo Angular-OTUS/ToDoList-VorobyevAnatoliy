@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
-import {taskExistsGuard} from './components/to-do-item-view/to-do-item-view';
 import {ROUTE_PARAMS, ROUTE_PATHS} from './const';
+import {taskExistsGuard} from './guards/task-exists-guard';
 
 export const routes: Routes = [
   {
